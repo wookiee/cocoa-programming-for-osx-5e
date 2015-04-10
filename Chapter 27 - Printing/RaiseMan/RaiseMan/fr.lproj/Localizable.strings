@@ -1,0 +1,12 @@
+﻿/* The remove alert's cancel button */
+"REMOVE_CANCEL" = "Annuler";
+
+/* The alert's informative text */
+"REMOVE_DO" = "Supprimer";
+
+/* The remove alert's informativeText */
+"REMOVE_INFORMATIVE %d" = "%d personnes seront supprimées.";
+
+/* The remove alert's messageText */
+"REMOVE_MESSAGE" = "Voulez-vous supprimer ces personnes?";
+

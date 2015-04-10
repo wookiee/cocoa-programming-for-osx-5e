@@ -1,0 +1,12 @@
+﻿/* The remove alert's cancel button */
+"REMOVE_CANCEL" = "REMOVE_CANCEL";
+
+/* The alert's informative text */
+"REMOVE_DO" = "REMOVE_DO";
+
+/* The remove alert's informativeText */
+"REMOVE_INFORMATIVE %d" = "REMOVE_INFORMATIVE %d";
+
+/* The remove alert's messageText */
+"REMOVE_MESSAGE" = "REMOVE_MESSAGE";
+

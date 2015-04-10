@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7517.1" systemVersion="14C1510" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Car" syncable="YES">
+        <attribute name="condition" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="datePurchased" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="makeModel" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="onSpecial" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="photo" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="price" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Car" positionX="-63" positionY="-18" width="128" height="135"/>
+    </elements>
+</model>

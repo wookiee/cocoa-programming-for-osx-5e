@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7515.2" systemVersion="14A389" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7515.2"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="MainWindowController" customModule="Thermostat" customModuleProvider="target">
+            <connections>
+                <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="Thermostat" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" animationBehavior="default" id="F0z-JX-Cv5">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="196" y="240" width="247" height="270"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
+            <view key="contentView" id="se5-gp-TjO">
+                <rect key="frame" x="0.0" y="0.0" width="247" height="270"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <slider horizontalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vz5-rN-usr">
+                        <rect key="frame" x="28" y="17" width="20" height="235"/>
+                        <sliderCell key="cell" continuous="YES" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="right" sliderType="linear" id="JHo-rY-eY7"/>
+                        <connections>
+                            <binding destination="-2" name="enabled" keyPath="isOn" id="Vlj-pJ-STs"/>
+                            <binding destination="-2" name="value" keyPath="temperature" id="bfi-rH-LVl"/>
+                        </connections>
+                    </slider>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V0T-NH-QVN">
+                        <rect key="frame" x="62" y="127" width="38" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="S3r-yD-TOL">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                        <connections>
+                            <binding destination="-2" name="value" keyPath="temperature" id="2wT-bf-80z"/>
+                        </connections>
+                    </textField>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lxw-gu-e2G">
+                        <rect key="frame" x="125" y="173" width="88" height="32"/>
+                        <buttonCell key="cell" type="push" title="Warmer" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="hrT-c5-nk7">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="makeWarmer:" target="-2" id="q4w-U9-Wd2"/>
+                            <binding destination="-2" name="enabled" keyPath="isOn" id="qwQ-I4-wW8"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Squ-By-6vV">
+                        <rect key="frame" x="125" y="63" width="81" height="32"/>
+                        <buttonCell key="cell" type="push" title="Cooler" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Qrt-s4-fMK">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="makeCooler:" target="-2" id="66B-Pu-ACU"/>
+                            <binding destination="-2" name="enabled" keyPath="isOn" id="y7V-D8-9le"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZpB-Jc-dos">
+                        <rect key="frame" x="174" y="14" width="53" height="19"/>
+                        <buttonCell key="cell" type="recessed" title="Power" bezelStyle="recessed" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="aDe-hM-4GH">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                            <font key="font" metaFont="systemBold" size="12"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="updateSwitch:" target="-2" id="JtO-F3-MPQ"/>
+                        </connections>
+                    </button>
+                </subviews>
+            </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
+            </connections>
+            <point key="canvasLocation" x="144.5" y="341"/>
+        </window>
+        <userDefaultsController representsSharedInstance="YES" id="pZQ-rc-xw8"/>
+    </objects>
+</document>

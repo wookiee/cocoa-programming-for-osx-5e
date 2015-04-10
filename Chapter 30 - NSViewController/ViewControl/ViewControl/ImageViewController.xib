@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7515.2" systemVersion="14C109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7515.2"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="ImageViewController" customModule="ViewControl" customModuleProvider="target">
+            <connections>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fvS-6L-n9A">
+                    <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" id="rIT-tf-JFW"/>
+                    <connections>
+                        <binding destination="-2" name="value" keyPath="image" id="W45-6o-8WT"/>
+                    </connections>
+                </imageView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="fvS-6L-n9A" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="QNZ-Xa-7fH"/>
+                <constraint firstItem="fvS-6L-n9A" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="R3Z-tu-rZ9"/>
+                <constraint firstAttribute="bottom" secondItem="fvS-6L-n9A" secondAttribute="bottom" id="glH-J3-BB3"/>
+                <constraint firstAttribute="trailing" secondItem="fvS-6L-n9A" secondAttribute="trailing" id="v7Y-TJ-NTP"/>
+            </constraints>
+        </customView>
+    </objects>
+</document>
