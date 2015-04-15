@@ -28,7 +28,7 @@ class EmployeesPrintingView: NSView {
     }
 
     required init?(coder: NSCoder) {
-        preconditionFailure("EmployeesPrintingView cannot be instantiated froma nib")
+        fatalError("unimplemented: instantiate programmatically instead")
     }
     
     // MARK: - Pagination
