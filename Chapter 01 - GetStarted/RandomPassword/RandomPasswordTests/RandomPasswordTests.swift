@@ -1,15 +1,15 @@
 //
-//  RandomTests.swift
-//  RandomTests
+//  RandomPasswordTests.swift
+//  RandomPasswordTests
 //
-//  Created by Adam Preble on 10/8/14.
-//  Copyright (c) 2014 Big Nerd Ranch. All rights reserved.
+//  Created by Nate Chandler on 4/20/15.
+//  Copyright (c) 2015 Big Nerd Ranch. All rights reserved.
 //
 
 import Cocoa
 import XCTest
 
-class RandomTests: XCTestCase {
+class RandomPasswordTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
