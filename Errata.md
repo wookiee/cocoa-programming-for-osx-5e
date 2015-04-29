@@ -4,6 +4,11 @@ If you encounter bugs in the book, please post them to the [forums][forum].
 
 [forum]: http://forums.bignerdranch.com/viewforum.php?f=511
 
+
+### 3. Structures and Classes
+
+- In the section "Reference and Value Types", `ball0.particle.x = 1` should be `ball0.position.x = 1`.
+
 ### 8. KVC, KVO, and Bindings
 
 - In the For the More Curious section on Dependent Keys, the class `Person` has two problems: First, as documented earlier in the chapter, a class must subclass NSObject to participate in KVO. Thus, Person should subclass NSObject. Second, the computed property `fullName` must have the explicit type `String`.
