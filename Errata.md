@@ -1,6 +1,6 @@
 # Errata for Cocoa Programming for OS X, 5th Edition
 
-If you encounter bugs in the book, please post them to the [forums][forum].
+If you encounter issues in the book, please post them to the forum for the appropriate chapter at [forums.bignerdranch.com][forum]. Thank you!
 
 [forum]: http://forums.bignerdranch.com/viewforum.php?f=511
 
@@ -12,6 +12,10 @@ If you encounter bugs in the book, please post them to the [forums][forum].
 ### 8. KVC, KVO, and Bindings
 
 - In the For the More Curious section on Dependent Keys, the class `Person` has two problems: First, as documented earlier in the chapter, a class must subclass NSObject to participate in KVO. Thus, Person should subclass NSObject. Second, the computed property `fullName` must have the explicit type `String`.
+
+### 14. User Defaults
+
+- In the section Storing the User Defaults, the text says that "you will need to make the app delegate the delegate of the text field". As shown correctly in the code listing that follows, it is the main window controller that should be the delegate of the text field. Later, the text says to open `MainMenu.xib`. Instead, you should open `MainWindowController.xib`.
 
 ### 27. Printing
 
