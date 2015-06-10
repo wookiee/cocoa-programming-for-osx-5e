@@ -234,7 +234,7 @@ class DieView: NSView, NSDraggingSource {
 	}
 	override func mouseUp(theEvent: NSEvent) {
 		println("mouseUp clickCount: \(theEvent.clickCount)")
-		if theEvent.clickCount == 2 {
+		if theEvent.clickCount == 2 && pressed {
 			roll()
 		}
 		pressed = false

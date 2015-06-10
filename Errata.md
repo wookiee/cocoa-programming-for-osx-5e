@@ -5,9 +5,18 @@ If you encounter issues in the book, please post them to the forum for the appro
 [forum]: http://forums.bignerdranch.com/viewforum.php?f=511
 
 
+### 2. Swift Types
+
+- `countingUp` should be defined as a variable (and not a constant) in the section Literals and Subscripting: `var countingUp = ...`. This is necessary because it is later mutated when calling `countingUp.append("three")` in the Instance methods section.
+
 ### 3. Structures and Classes
 
 - In the section "Reference and Value Types", `ball0.particle.x = 1` should be `ball0.position.x = 1`.
+
+### 6. Delegation
+
+- The `speechSynthesizer(_:didFinishSpeaking:)` method is correctly implemented to set `isStarted = false`. However, later in the chapter the same method is incorrectly shown to call `updateButtons()` instead.
+- In the section "Common errors in implementing a delegate", the description of buggy behavior upon misspelling `speechSynthesizer(_:didFinishSpeaking:)` should state that the Start button will never be enabled (the Stop button remains enabled indefinitely). Additionally, the window can not be closed.
 
 ### 8. KVC, KVO, and Bindings
 
@@ -17,9 +26,21 @@ If you encounter issues in the book, please post them to the forum for the appro
 
 - In the section Storing the User Defaults, the text says that "you will need to make the app delegate the delegate of the text field". As shown correctly in the code listing that follows, it is the main window controller that should be the delegate of the text field. Later, the text says to open `MainMenu.xib`. Instead, you should open `MainWindowController.xib`.
 
+### 18. Mouse Events
+
+- In the section Improving Hit Detection, the `pressed` property is used to indicate whether the user actually clicked on the die. `mouseUp(_:)`, however, does not check `pressed` before calling `randomize()`. As such the if expression in `mouseUp(_:)` should read: `theEvent.clickCount == 2 && pressed`.
+
+### 25. Auto Layout
+
+- In the section on Ambiguous Layout, on page 375, the reader is instructed to add a call to `visualizeConstraints(_:)` at the end of `applicationDidFinishLaunching(_:)`. The line above, shown for context, is a call to `addConstraints(_:)`, but it should be `NSLayoutConstraint.activateConstraints(verticalConstraints)`.  `addConstraints(_:)` is the old way of doing this; it has been noted as deprecated in Apple's headers.
+
 ### 27. Printing
 
 - In `EmployeesPrintingView`, the `init?(coder:)` initializer calls `assertionFailure()`. This should be changed to `fatalError()`. The reason is that with optimization enabled, such as in a release build, the compiler leaves out assertions. The Swift compiler knows this and in order to ensure that an object is fully initialized, considers it an error. Calls to `fatalError()` are not ignored, however.
+
+### 28. Web Services
+
+- In the code snippet demonstrating using `NSXMLDocument` the result of the calls to `nodesForXPath(_:error:)`, is cast using `as [NSXMLNode]`. Because the type of this API presently returns `[AnyObject]!`, in the eyes of the Swift compiler this cast could fail. As such it must be cast using `as!`, like this: `nodesForXPath(...) as! [NSXMLNode]`.
 
 
 ### 29. Unit Testing
