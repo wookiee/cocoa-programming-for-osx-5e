@@ -30,6 +30,10 @@ If you encounter issues in the book, please post them to the forum for the appro
 
 - In the section Improving Hit Detection, the `pressed` property is used to indicate whether the user actually clicked on the die. `mouseUp(_:)`, however, does not check `pressed` before calling `randomize()`. As such the if expression in `mouseUp(_:)` should read: `theEvent.clickCount == 2 && pressed`.
 
+### 22. Drag-and-Drop
+
+- In the section named 'After the drop' on page 337, the reader is instructed to implement the 'draggedImage(_:endedAt:operation)' method, but instead should only implement 'draggingSession(_:endedAtPoint:operation:)' described undeneath that line.
+
 ### 25. Auto Layout
 
 - In the section on Ambiguous Layout, on page 375, the reader is instructed to add a call to `visualizeConstraints(_:)` at the end of `applicationDidFinishLaunching(_:)`. The line above, shown for context, is a call to `addConstraints(_:)`, but it should be `NSLayoutConstraint.activateConstraints(verticalConstraints)`.  `addConstraints(_:)` is the old way of doing this; it has been noted as deprecated in Apple's headers.
