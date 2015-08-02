@@ -32,7 +32,7 @@ If you encounter issues in the book, please post them to the forum for the appro
 
 ### 22. Drag-and-Drop
 
-- In the section named 'After the drop' on page 337, the reader is instructed to implement the 'draggedImage(_:endedAt:operation)' method, but instead should only implement 'draggingSession(_:endedAtPoint:operation:)' described undeneath that line.
+- In the section After the drop on page 337, the reader is instructed to implement the `draggedImage(_:endedAt:operation)` method, but instead should only implement `draggingSession(_:endedAtPoint:operation:)` described undeneath that line.
 
 ### 25. Auto Layout
 
