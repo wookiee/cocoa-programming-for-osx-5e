@@ -28,7 +28,7 @@ If you encounter issues in the book, please post them to the forum for the appro
 
 ### 18. Mouse Events
 
-- In the section Improving Hit Detection, the `pressed` property is used to indicate whether the user actually clicked on the die. `mouseUp(_:)`, however, does not check `pressed` before calling `randomize()`. As such the if expression in `mouseUp(_:)` should read: `theEvent.clickCount == 2 && pressed`.
+- In the section Improving Hit Detection, the `pressed` property is used to indicate whether the user actually clicked on the die. The `mouseUp(_:)` method (from the previous section entitled Click to Roll), however, does not check `pressed` before calling `randomize()`. As such the if expression in `mouseUp(_:)` should read: `theEvent.clickCount == 2 && pressed`.
 
 ### 25. Auto Layout
 
@@ -42,6 +42,9 @@ If you encounter issues in the book, please post them to the forum for the appro
 
 - In the code snippet demonstrating using `NSXMLDocument` the result of the calls to `nodesForXPath(_:error:)`, is cast using `as [NSXMLNode]`. Because the type of this API presently returns `[AnyObject]!`, in the eyes of the Swift compiler this cast could fail. As such it must be cast using `as!`, like this: `nodesForXPath(...) as! [NSXMLNode]`.
 
+- In `ScheduleFetcher`, the `courseFromDictionary(_:)` method instantiates an `NSDateFormatter` and assigns a var to reference it: `var dateFormatter = NSDateFormatter()`.  The `dateFormatter` reference should never be changed to refer to a different object, so it should be a `let` instead: `let dateFormatter = NSDateFormatter()`.
+
+- In `ScheduleFetcher`, the same error code (`1`) is used twice.  There should be a different error code for each type of error.  The error code for the second error ("Bad status code") should have code `2`: `let error = self.errorWithCode(2, localizedDescription: "Bad status code \(response.statusCode)")`.
 
 ### 29. Unit Testing
 
