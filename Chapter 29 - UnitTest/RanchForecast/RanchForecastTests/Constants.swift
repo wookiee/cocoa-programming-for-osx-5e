@@ -32,7 +32,6 @@ class Constants {
                                       HTTPVersion: nil,
                                      headerFields: nil)
     
-    static let jsonData = NSJSONSerialization.dataWithJSONObject(coursesDictionary,
-                                                                 options:.allZeros,
-                                                                 error: nil)!
+    static let jsonData = try! NSJSONSerialization.dataWithJSONObject(coursesDictionary,
+                                                             options: [])
 }

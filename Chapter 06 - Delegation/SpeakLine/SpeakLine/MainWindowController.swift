@@ -10,7 +10,7 @@ import Cocoa
 
 class MainWindowController: NSWindowController, NSSpeechSynthesizerDelegate, NSWindowDelegate {
 
-    override var windowNibName: String {
+    override var windowNibName: String? {
         return "MainWindowController"
     }
     
@@ -41,7 +41,7 @@ class MainWindowController: NSWindowController, NSSpeechSynthesizerDelegate, NSW
         // Get typed-in text as a string
         let string = textField.stringValue
         if string.isEmpty {
-            println("string from \(textField) is empty")
+            print("string from \(textField) is empty")
         } else {
             speechSynth.startSpeakingString(string)
             isStarted = true
@@ -69,7 +69,7 @@ class MainWindowController: NSWindowController, NSSpeechSynthesizerDelegate, NSW
     // MARK: NSSpeechSynthesizerDelegate
     func speechSynthesizer(sender: NSSpeechSynthesizer, didFinishSpeaking finishedSpeaking: Bool) {
         isStarted = false
-        println("finishedSpeaking=\(finishedSpeaking)")
+        print("finishedSpeaking=\(finishedSpeaking)")
     }
     
     

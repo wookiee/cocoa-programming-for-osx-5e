@@ -32,7 +32,7 @@ class DieView: NSView {
 		let edgeLength = min(size.width, size.height)
 		let padding = edgeLength/10.0
 		let drawingBounds = CGRect(x: 0, y: 0, width: edgeLength, height: edgeLength)
-		let dieFrame = drawingBounds.rectByInsetting(dx: padding, dy: padding)
+		let dieFrame = drawingBounds.insetBy(dx: padding, dy: padding)
 		return (edgeLength, dieFrame)
 	}
 	
@@ -41,7 +41,7 @@ class DieView: NSView {
 			let (edgeLength, dieFrame) = metricsForSize(size)
 			let cornerRadius: CGFloat = edgeLength/5.0
 			let dotRadius = edgeLength/12.0
-			let dotFrame = dieFrame.rectByInsetting(dx: dotRadius * 2.5, dy: dotRadius * 2.5)
+			let dotFrame = dieFrame.insetBy(dx: dotRadius * 2.5, dy: dotRadius * 2.5)
 			
 			NSGraphicsContext.saveGraphicsState()
 			
@@ -57,24 +57,24 @@ class DieView: NSView {
 			
 			NSColor.blackColor().set()
 			
-			func drawDot(u: CGFloat, v: CGFloat) {
+			func drawDot(u: CGFloat, _ v: CGFloat) {
 				let dotOrigin = CGPoint(x: dotFrame.minX + dotFrame.width * u,
 										y: dotFrame.minY + dotFrame.height * v)
 				let dotRect = CGRect(origin: dotOrigin, size: CGSizeZero)
-					.rectByInsetting(dx: -dotRadius, dy: -dotRadius)
+					.insetBy(dx: -dotRadius, dy: -dotRadius)
 				NSBezierPath(ovalInRect: dotRect).fill()
 			}
 			
-			if find(1...6, intValue) != nil {
+			if (1...6).indexOf(intValue) != nil {
 				// Draw Dots
-				if find([1, 3, 5], intValue) != nil {
+				if [1, 3, 5].indexOf(intValue) != nil {
 					drawDot(0.5, 0.5) // center dot
 				}
-				if find(2...6, intValue) != nil {
+				if (2...6).indexOf(intValue) != nil {
 					drawDot(0, 1) // upper left
 					drawDot(1, 0) // lower right
 				}
-				if find(4...6, intValue) != nil {
+				if (4...6).indexOf(intValue) != nil {
 					drawDot(1, 1) // upper right
 					drawDot(0, 0) // lower left
 				}

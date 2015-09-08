@@ -8,15 +8,15 @@
 
 import Foundation
 
-private let characters = Array("0123456789abcdefghijklmnopqrstuvwxyz" +
-                               "ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+private let characters = Array(("0123456789abcdefghijklmnopqrstuvwxyz" +
+                               "ABCDEFGHIJKLMNOPQRSTUVWXYZ").characters)
 
 func generateRandomString(length: Int) -> String {
     // Start with an empty string
     var string = ""
     
     // Append 'length' number of random characters
-    for index in 0..<length {
+    for _ in 0..<length {
         string.append(generateRandomCharacter())
     }
     

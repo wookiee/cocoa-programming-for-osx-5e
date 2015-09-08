@@ -12,14 +12,12 @@ import Cocoa
 class MainSplitViewController: NSSplitViewController, CourseListViewControllerDelegate {
     
     var masterViewController: CourseListViewController {
-        let masterItem = splitViewItems[0] as! NSSplitViewItem
-        return masterItem.viewController as! CourseListViewController
+        return splitViewItems[0].viewController as! CourseListViewController
     }
     
     
     var detailViewController: WebViewController {
-        let masterItem = splitViewItems[1] as! NSSplitViewItem
-        return masterItem.viewController as! WebViewController
+        return splitViewItems[1].viewController as! WebViewController
     }
     
     

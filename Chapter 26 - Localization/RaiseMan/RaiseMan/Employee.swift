@@ -20,7 +20,7 @@ class Employee: NSObject, NSCoding {
         aCoder.encodeFloat(raise, forKey: "raise")
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         name = aDecoder.decodeObjectForKey("name") as! String?
         raise = aDecoder.decodeFloatForKey("raise")
         super.init()

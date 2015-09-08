@@ -29,12 +29,12 @@ class Document: NSDocument, NSWindowDelegate {
     // MARK: - Actions
     
     @IBAction func addEmployee(sender: NSButton) {
-        let windowController = windowControllers[0] as! NSWindowController
+        let windowController = windowControllers[0]
         let window = windowController.window!
         
         let endedEditing = window.makeFirstResponder(window)
         if !endedEditing {
-            println("Unable to end editing.")
+            print("Unable to end editing.")
             return
         }
         
@@ -61,10 +61,10 @@ class Document: NSDocument, NSWindowDelegate {
         let sortedEmployees = arrayController.arrangedObjects as! [Employee]
         
         // Find the object just added
-        let row = find(sortedEmployees, employee)!
+        let row = sortedEmployees.indexOf(employee)!
         
         // Begin the edit in the first column
-        println("starting edit of \(employee) in row \(row)")
+        print("starting edit of \(employee) in row \(row)")
         tableView.editColumn(0, row: row, withEvent: nil, select: true)
     }
     
@@ -91,7 +91,7 @@ class Document: NSDocument, NSWindowDelegate {
     // MARK: - Accessors
     
     func insertObject(employee: Employee, inEmployeesAtIndex index: Int) {
-        println("adding \(employee) to the employees array")
+        print("adding \(employee) to the employees array")
         
         // Add the inverse of this operation to the undo stack
         let undo: NSUndoManager = undoManager!
@@ -106,7 +106,7 @@ class Document: NSDocument, NSWindowDelegate {
     func removeObjectFromEmployeesAtIndex(index: Int) {
         let employee: Employee = employees[index]
         
-        println("removing \(employee) from the employees array")
+        print("removing \(employee) from the employees array")
         
         // Add the inverse of this operation to the undo stack 
         let undo: NSUndoManager = undoManager!
@@ -131,22 +131,28 @@ class Document: NSDocument, NSWindowDelegate {
         employee.removeObserver(self, forKeyPath: "raise", context: &KVOContext)
     }
     
-    override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
-        if context != &KVOContext {
+    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+        guard context == &KVOContext else {
             // If the context does not match, this message
-            // must be intended for our superclass.
-            super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
+            //   must be intended for our superclass.
+            super.observeValueForKeyPath(keyPath,
+                ofObject: object,
+                change: change,
+                context: context)
             return
         }
         
-        var oldValue: AnyObject? = change[NSKeyValueChangeOldKey]
-        if oldValue is NSNull {
-            oldValue = nil
+        if let keyPath = keyPath, object = object, change = change {
+            var oldValue: AnyObject? = change[NSKeyValueChangeOldKey]
+            if oldValue is NSNull {
+                oldValue = nil
+            }
+            
+            let undo: NSUndoManager = undoManager!
+            print("oldValue=\(oldValue)")
+            undo.prepareWithInvocationTarget(object).setValue(oldValue,
+                forKeyPath: keyPath)
         }
-        
-        let undo: NSUndoManager = undoManager!
-        println("oldValue=\(oldValue)")
-        undo.prepareWithInvocationTarget(object).setValue(oldValue, forKeyPath: keyPath)
     }
     
     // MARK - Lifecycle
@@ -175,7 +181,7 @@ class Document: NSDocument, NSWindowDelegate {
         return "Document"
     }
 
-    override func dataOfType(typeName: String, error outError: NSErrorPointer) -> NSData? {
+    override func dataOfType(typeName: String) throws -> NSData {
         // End editting
         tableView.window!.endEditingFor(nil)
         
@@ -183,10 +189,9 @@ class Document: NSDocument, NSWindowDelegate {
         return NSKeyedArchiver.archivedDataWithRootObject(employees)
     }
 
-    override func readFromData(data: NSData, ofType typeName: String, error outError: NSErrorPointer) -> Bool {
-        println("About to read data of type \(typeName).");
+    override func readFromData(data: NSData, ofType typeName: String) throws {
+        print("About to read data of type \(typeName).");
         employees = NSKeyedUnarchiver.unarchiveObjectWithData(data) as! [Employee]
-        return true
     }
 
     // MARK: - NSWindowDelegate

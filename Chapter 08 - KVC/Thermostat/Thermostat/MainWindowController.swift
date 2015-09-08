@@ -17,11 +17,11 @@ class MainWindowController: NSWindowController {
     var internalTemperature = 68
     dynamic var temperature: Int {
         set {
-            println("set temperature to \(newValue)")
+            print("set temperature to \(newValue)")
             internalTemperature = newValue
         }
         get {
-            println("get temperature")
+            print("get temperature")
             return internalTemperature
         }
     }

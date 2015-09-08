@@ -22,11 +22,11 @@ class NerdTabViewController : NSViewController {
     
     
     func selectTabAtIndex(index: Int) {
-        assert(contains(0..<childViewControllers.count, index), "index out of range")
-        for (i, button) in enumerate(buttons) {
-        button.state = (index == i) ? NSOnState : NSOffState
+        assert(index >= 0 && index < childViewControllers.count, "index out of range")
+        for (i, button) in buttons.enumerate() {
+            button.state = (index == i) ? NSOnState : NSOffState
         }
-        let viewController = childViewControllers[index] as! NSViewController
+        let viewController = childViewControllers[index]
         box.contentView = viewController.view
     }
     
@@ -48,8 +48,8 @@ class NerdTabViewController : NSViewController {
         let buttonWidth: CGFloat = 28
         let buttonHeight: CGFloat = 28
         
-        let viewControllers = childViewControllers as! [NSViewController]
-        buttons = map(enumerate(viewControllers)) {
+        let viewControllers = childViewControllers
+        buttons = viewControllers.enumerate().map {
             (index, viewController) -> NSButton in
             let button = NSButton()
             button.setButtonType(.ToggleButton)
@@ -105,10 +105,12 @@ class NerdTabViewController : NSViewController {
             let metrics = ["buttonHeight": buttonHeight]
             
             func addVisualFormatConstraints(visualFormat:String) {
-                view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(visualFormat,
-                options: .allZeros,
-                metrics: metrics,
-                views: views))
+                let constraints =
+                NSLayoutConstraint.constraintsWithVisualFormat(visualFormat,
+                                                      options: [],
+                                                      metrics: metrics,
+                                                        views: views)
+                NSLayoutConstraint.activateConstraints(constraints)
             }
             addVisualFormatConstraints("H:|[stack]|")
             addVisualFormatConstraints("H:|[separator]|")

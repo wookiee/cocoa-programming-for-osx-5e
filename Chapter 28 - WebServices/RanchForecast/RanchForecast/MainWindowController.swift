@@ -28,13 +28,13 @@ class MainWindowController: NSWindowController {
         tableView.target = self
         tableView.doubleAction = Selector("openClass:")
         
-        fetcher.fetchCoursesUsingCompletionHandler { (result) in
+        fetcher.fetchCoursesUsingCompletionHandler { result in
             switch result {
             case .Success(let courses):
-                println("Got courses: \(courses)")
+                print("Got courses: \(courses)")
                 self.courses = courses
             case .Failure(let error):
-                println("Got error: \(error)")
+                print("Got error: \(error)")
                 NSAlert(error: error).runModal()
                 self.courses = []
             }

@@ -8,7 +8,6 @@
 
 import Cocoa
 
-
 protocol CourseListViewControllerDelegate: class {
     func courseListViewController(viewController: CourseListViewController,
                                   selectedCourse: Course?) -> Void
@@ -32,13 +31,13 @@ class CourseListViewController: NSViewController {
             switch result {
                 case .Success(let courses):
                     #if DEBUG
-                        println("Got courses: \(courses)")
+                        print("Got courses: \(courses)")
                     #else
-                        println("Got courses")
-                        #endif
+                        print("Got courses")
+                    #endif
                     self.courses = courses
                 case .Failure(let error):
-                    println("Got error: \(error)")
+                    print("Got error: \(error)")
                     NSAlert(error: error).runModal()
                     self.courses = []
             }

@@ -162,6 +162,7 @@
 		3052A53C1AB0807500D551C8 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = "Big Nerd Ranch";
 				TargetAttributes = {
@@ -418,6 +419,7 @@
 				3052A5681AB0807500D551C8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3052A5691AB0807500D551C8 /* Build configuration list for PBXNativeTarget "CarLotTests" */ = {
 			isa = XCConfigurationList;
@@ -426,6 +428,7 @@
 				3052A56B1AB0807500D551C8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

@@ -44,7 +44,7 @@ class ChatWindowController: NSWindowController {
     
     
     // MARK: - Actions
-    @IBAction func send(sender: AnyObject) {
+    @IBAction func send(sender: NSButton) {
         sender.window?.endEditingFor(nil)
         if let message = message {
             let userInfo = [ChatWindowControllerMessageKey : message]

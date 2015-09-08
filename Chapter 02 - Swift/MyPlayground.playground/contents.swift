@@ -24,7 +24,7 @@ let secondElement = countingUp[1]
 let nameByParkingSpace = [13: "Alice", 27: "Bob"]
 //let spaceAssignee = nameByParkingSpace[13]
 if let spaceAssignee = nameByParkingSpace[13] {
-    println("Key 13 was in the dictionary!")
+    print("Key 13 was in the dictionary!")
 }
 
 //: # Initializers
@@ -85,7 +85,7 @@ for string in countingUp {
     
 }
 
-for (i, string) in enumerate(countingUp) {
+for (i, string) in countingUp.enumerate() {
     
 }
 

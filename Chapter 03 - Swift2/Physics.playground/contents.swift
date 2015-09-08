@@ -1,6 +1,6 @@
 import Cocoa
 
-struct Vector: Printable {
+struct Vector: CustomStringConvertible {
     var x: Double
     var y: Double
     
@@ -110,7 +110,7 @@ class Simulation {
         particles = particles.filter { particle in
             let live = particle.position.y > 0.0
             if !live {
-                println("Terminated at time \(self.time)")
+                print("Terminated at time \(self.time)")
             }
             return live
         }
@@ -132,6 +132,6 @@ while simulation.particles.count > 0 && simulation.time < 500 {
     simulation.tick(1.0)
 }
 
-println("Gravity is \(gravity).")
+print("Gravity is \(gravity).")
 
 

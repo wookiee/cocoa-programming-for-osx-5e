@@ -38,8 +38,7 @@ class Document: NSDocument, NSTableViewDataSource {
         return "Document"
     }
     
-    
-    override func readFromURL(url: NSURL, ofType typeName: String, error outError: NSErrorPointer) -> Bool {
+    override func readFromURL(url: NSURL, ofType typeName: String) throws {
         // Which file are we getting the zipinfo for?
         let filename = url.path!
         
@@ -64,28 +63,25 @@ class Document: NSDocument, NSTableViewDataSource {
         let status = task.terminationStatus
         
         // Check status
-        if status != 0 {
-            if outError != nil {
+        guard status == 0 else {
             let errorDomain = "com.bignerdranch.ProcessReturnCodeErrorDomain"
-            let errorInfo = [ NSLocalizedFailureReasonErrorKey : "zipinfo returned \(status)"]
-            outError.memory = NSError(domain: errorDomain,
-                                        code: 0,
-                                    userInfo: errorInfo)
-            }
-            return false
+            let errorInfo
+                = [ NSLocalizedFailureReasonErrorKey : "zipinfo returned \(status)"]
+            let error = NSError(domain: errorDomain,
+                                  code: 0,
+                              userInfo: errorInfo)
+            throw error
         }
         
         // Convert to a string
-        let string = NSString(data: data, encoding: NSUTF8StringEncoding)!
+        let string = String(data: data, encoding: NSUTF8StringEncoding)!
         
         // Break the string into lines
-        filenames = string.componentsSeparatedByString("\n") as! [String]
-        println("filenames = \(filenames)")
+        filenames = string.componentsSeparatedByString("\n")
+        print("filenames = \(filenames)")
         
         // In case of revert
-        //tableView.reloadData()
-        
-        return true
+        tableView?.reloadData()
     }
         
         

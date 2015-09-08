@@ -44,13 +44,13 @@ class ViewController: NSViewController {
             let notificationCenter = NSNotificationCenter.defaultCenter()
             notificationCenter.removeObserver(self)
             notificationCenter.addObserver(self,
-                                           selector: Selector("receiveDataReadyNotification:"),
-                                           name: NSFileHandleReadCompletionNotification,
-                                           object: fileHandle)
+                                 selector: Selector("receiveDataReadyNotification:"),
+                                     name: NSFileHandleReadCompletionNotification,
+                                   object: fileHandle)
             notificationCenter.addObserver(self,
-                                           selector: Selector("receiveTaskTerminatedNotification:"),
-                                           name: NSTaskDidTerminateNotification,
-                                           object: task)
+                                 selector: Selector("receiveTaskTerminatedNotification:"),
+                                     name: NSTaskDidTerminateNotification,
+                                   object: task)
         
             task.launch()
         
@@ -63,10 +63,10 @@ class ViewController: NSViewController {
     
     
     func appendData(data: NSData) {
-        let string = NSString(data: data, encoding: NSUTF8StringEncoding)!
+        let string = String(data: data, encoding: NSUTF8StringEncoding)! as String
         let textStorage = outputView.textStorage!
         let endRange = NSRange(location: textStorage.length, length: 0)
-        textStorage.replaceCharactersInRange(endRange, withString: string as! String)
+        textStorage.replaceCharactersInRange(endRange, withString: string)
     }
     
     
@@ -74,7 +74,7 @@ class ViewController: NSViewController {
         let data = notification.userInfo![NSFileHandleNotificationDataItem] as! NSData
         let length = data.length
                 
-        println("received data: \(length) bytes")
+        print("received data: \(length) bytes")
         if length > 0 {
             self.appendData(data)
         }
@@ -87,7 +87,7 @@ class ViewController: NSViewController {
     
     
     func receiveTaskTerminatedNotification(notification: NSNotification) {
-        println("task terminated")
+        print("task terminated")
                 
         task = nil
         pipe = nil

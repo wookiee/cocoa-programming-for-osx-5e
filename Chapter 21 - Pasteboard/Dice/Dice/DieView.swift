@@ -42,9 +42,9 @@ class DieView: NSView {
 		let edgeLength = min(size.width, size.height)
 		let padding = edgeLength/10.0
 		let drawingBounds = CGRect(x: 0, y: 0, width: edgeLength, height: edgeLength)
-		var dieFrame = drawingBounds.rectByInsetting(dx: padding, dy: padding)
+		var dieFrame = drawingBounds.insetBy(dx: padding, dy: padding)
 		if pressed {
-			dieFrame = dieFrame.rectByOffsetting(dx: 0, dy: -edgeLength/40)
+			dieFrame = dieFrame.offsetBy(dx: 0, dy: -edgeLength/40)
 		}
 		return (edgeLength, dieFrame)
 	}
@@ -54,7 +54,7 @@ class DieView: NSView {
 			let (edgeLength, dieFrame) = metricsForSize(size)
 			let cornerRadius:CGFloat = edgeLength/5.0
 			let dotRadius = edgeLength/12.0
-			let dotFrame = dieFrame.rectByInsetting(dx: dotRadius * 2.5, dy: dotRadius * 2.5)
+			let dotFrame = dieFrame.insetBy(dx: dotRadius * 2.5, dy: dotRadius * 2.5)
 			
 			NSGraphicsContext.saveGraphicsState()
 			
@@ -70,24 +70,24 @@ class DieView: NSView {
 			
 			NSColor.blackColor().set()
 			
-			func drawDot(u: CGFloat, v: CGFloat) {
+			func drawDot(u: CGFloat, _ v: CGFloat) {
 				let dotOrigin = CGPoint(x: dotFrame.minX + dotFrame.width * u,
 										y: dotFrame.minY + dotFrame.height * v)
 				let dotRect = CGRect(origin: dotOrigin, size: CGSizeZero)
-					.rectByInsetting(dx: -dotRadius, dy: -dotRadius)
+					.insetBy(dx: -dotRadius, dy: -dotRadius)
 				NSBezierPath(ovalInRect: dotRect).fill()
 			}
 			
-			if find(1...6, intValue) != nil {
+			if (1...6).indexOf(intValue) != nil {
 				// Draw Dots
-				if find([1, 3, 5], intValue) != nil {
+				if [1, 3, 5].indexOf(intValue) != nil {
 					drawDot(0.5, 0.5) // center dot
 				}
-				if find(2...6, intValue) != nil {
+				if (2...6).indexOf(intValue) != nil {
 					drawDot(0, 1) // upper left
 					drawDot(1, 0) // lower right
 				}
-				if find(4...6, intValue) != nil {
+				if (4...6).indexOf(intValue) != nil {
 					drawDot(1, 1) // upper right
 					drawDot(0, 0) // lower left
 				}
@@ -97,8 +97,8 @@ class DieView: NSView {
 				}
 			}
 			else {
-				var paraStyle = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
-				paraStyle.alignment = .CenterTextAlignment
+				let paraStyle = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
+				paraStyle.alignment = .Center
 				let font = NSFont.systemFontOfSize(edgeLength * 0.6)
 				let attrs = [
 					NSForegroundColorAttributeName: NSColor.blackColor(),
@@ -113,38 +113,36 @@ class DieView: NSView {
 	@IBAction func savePDF(sender: AnyObject!) {
 		let savePanel = NSSavePanel()
 		savePanel.allowedFileTypes = ["pdf"]
-		savePanel.beginSheetModalForWindow(window!, completionHandler: {
-			[unowned savePanel] (result) in
-			if result == NSModalResponseOK {
-				let data = self.dataWithPDFInsideRect(self.bounds)
-				var error: NSError?
-				let ok = data.writeToURL(savePanel.URL!,
-							options: NSDataWritingOptions.DataWritingAtomic,
-							  error: &error)
-				if !ok {
-					let alert = NSAlert(error: error!)
-					alert.runModal()
-				}
-			}
-		})
-		let fm = NSFontManager.sharedFontManager()
-		let font = NSFont.systemFontOfSize(12)
-		let boldFont = fm.convertFont(font, toHaveTrait: NSFontTraitMask.BoldFontMask)
+        savePanel.beginSheetModalForWindow(window!) {
+            [unowned savePanel] (result) in
+            if result == NSModalResponseOK {
+                let data = self.dataWithPDFInsideRect(self.bounds)
+                do {
+                    try data.writeToURL(savePanel.URL!,
+                        options: NSDataWritingOptions.DataWritingAtomic)
+                } catch let error as NSError {
+                    let alert = NSAlert(error: error)
+                    alert.runModal()
+                } catch {
+                    fatalError("unknown error")
+                }
+            }
+        }
 	}
 
 	// MARK: - Mouse Events
 	
 	override func mouseDown(theEvent: NSEvent) {
-		println("mouseDown")
+		Swift.print("mouseDown")
 		let dieFrame = metricsForSize(bounds.size).dieFrame
 		let pointInView = convertPoint(theEvent.locationInWindow, fromView: nil)
 		pressed = dieFrame.contains(pointInView)
 	}
 	override func mouseDragged(theEvent: NSEvent) {
-		println("mouseDragged location: \(theEvent.locationInWindow)")
+		Swift.print("mouseDragged location: \(theEvent.locationInWindow)")
 	}
 	override func mouseUp(theEvent: NSEvent) {
-		println("mouseUp clickCount: \(theEvent.clickCount)")
+		Swift.print("mouseUp clickCount: \(theEvent.clickCount)")
 		if theEvent.clickCount == 2 && pressed {
 			randomize()
 		}
@@ -180,7 +178,7 @@ class DieView: NSView {
 	
 	override func insertText(insertString: AnyObject) {
 		let text = insertString as! String
-		if let number = text.toInt() {
+		if let number = Int(text) {
 			intValue = number
 		}
 	}
@@ -204,7 +202,7 @@ class DieView: NSView {
 	func readFromPasteboard(pasteboard: NSPasteboard) -> Bool {
 		let objects = pasteboard.readObjectsForClasses([NSString.self], options: [:]) as! [String]
 		if let str = objects.first {
-			intValue = str.toInt()
+			intValue = Int(str)
 			return true
 		}
 		return false

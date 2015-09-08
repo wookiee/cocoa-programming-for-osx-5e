@@ -28,12 +28,12 @@ class Document: NSDocument, NSWindowDelegate {
     
     // MARK: - Actions
     @IBAction func addEmployee(sender: NSButton) {
-        let windowController = windowControllers[0] as! NSWindowController
+        let windowController = windowControllers[0]
         let window = windowController.window!
         
         let endedEditing = window.makeFirstResponder(window)
         if !endedEditing {
-            println("Unable to end editing")
+            print("Unable to end editing")
             return
         }
         
@@ -60,17 +60,17 @@ class Document: NSDocument, NSWindowDelegate {
         let sortedEmployees = arrayController.arrangedObjects as! [Employee]
         
         // Find the object just added
-        let row = find(sortedEmployees, employee)!
+        let row = sortedEmployees.indexOf(employee)!
         
         // Begin the edit in the first column
-        println("starting edit of \(employee) in row \(row)")
+        print("starting edit of \(employee) in row \(row)")
         tableView.editColumn(0, row: row, withEvent: nil, select: true)
     }
     
     // MARK: - Accessors
     
     func insertObject(employee: Employee, inEmployeesAtIndex index: Int) {
-        println("adding \(employee) to the employees array")
+        print("adding \(employee) to the employees array")
         
         // Add the inverse of this operation to the undo stack
         let undo: NSUndoManager = undoManager!
@@ -85,7 +85,7 @@ class Document: NSDocument, NSWindowDelegate {
     func removeObjectFromEmployeesAtIndex(index: Int) {
         let employee: Employee = employees[index]
         
-        println("removing \(employee) from the employees array")
+        print("removing \(employee) from the employees array")
         
         // Add the inverse of this operation to the undo stack 
         let undo: NSUndoManager = undoManager!
@@ -110,22 +110,24 @@ class Document: NSDocument, NSWindowDelegate {
         employee.removeObserver(self, forKeyPath: "raise", context: &KVOContext)
     }
     
-    override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
-        if context != &KVOContext {
+    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+        guard context == &KVOContext else {
             // If the context does not match, this message
             // must be intended for our superclass.
             super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
             return
         }
         
-        var oldValue: AnyObject? = change[NSKeyValueChangeOldKey]
-        if oldValue is NSNull {
-            oldValue = nil
+        if let keyPath = keyPath, object = object, change = change {
+            var oldValue: AnyObject? = change[NSKeyValueChangeOldKey]
+            if oldValue is NSNull {
+                oldValue = nil
+            }
+            
+            let undo: NSUndoManager = undoManager!
+            print("oldValue=\(oldValue)")
+            undo.prepareWithInvocationTarget(object).setValue(oldValue, forKeyPath: keyPath)
         }
-        
-        let undo: NSUndoManager = undoManager!
-        println("oldValue=\(oldValue)")
-        undo.prepareWithInvocationTarget(object).setValue(oldValue, forKeyPath: keyPath)
     }
     
     // MARK - Lifecycle
@@ -154,19 +156,12 @@ class Document: NSDocument, NSWindowDelegate {
         return "Document"
     }
 
-    override func dataOfType(typeName: String?, error outError: NSErrorPointer) -> NSData? {
-        // Insert code here to write your document to data of the specified type. If outError != nil, ensure that you create and set an appropriate error when returning nil.
-        // You can also choose to override fileWrapperOfType:error:, writeToURL:ofType:error:, or writeToURL:ofType:forSaveOperation:originalContentsURL:error: instead.
-        outError.memory = NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
-        return nil
+    override func dataOfType(typeName: String?) throws -> NSData {
+        throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
     }
 
-    override func readFromData(data: NSData?, ofType typeName: String?, error outError: NSErrorPointer) -> Bool {
-        // Insert code here to read your document from the given data of the specified type. If outError != nil, ensure that you create and set an appropriate error when returning false.
-        // You can also choose to override readFromFileWrapper:ofType:error: or readFromURL:ofType:error: instead.
-        // If you override either of these, you should also override -isEntireFileLoaded to return NO if the contents are lazily loaded.
-        outError.memory = NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
-        return false
+    override func readFromData(data: NSData?, ofType typeName: String?) throws {
+        throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
     }
 
     // MARK: - NSWindowDelegate

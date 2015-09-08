@@ -13,6 +13,16 @@ public class ScheduleFetcher {
     public enum FetchCoursesResult {
         case Success([Course])
         case Failure(NSError)
+        
+        init(throwingClosure: () throws -> [Course]) {
+            do {
+                let courses = try throwingClosure()
+                self = .Success(courses)
+            }
+            catch {
+                self = .Failure(error as NSError)
+            }
+        }
     }
     
     let session: NSURLSession
@@ -24,25 +34,26 @@ public class ScheduleFetcher {
     }
     
     
-    func fetchCoursesUsingCompletionHandler(completionHandler: (FetchCoursesResult) -> (Void)) {
+    func fetchCoursesUsingCompletionHandler(completionHandler: FetchCoursesResult -> Void) {
         let url = NSURL(string: "http://bookapi.bignerdranch.com/courses.json")!
         let request = NSURLRequest(URL: url)
         
-        let task = session.dataTaskWithRequest(request, completionHandler: {
-            (data, response, error) -> Void in
-            var result: FetchCoursesResult = self.resultFromData(data, response: response, error: error)
-            NSOperationQueue.mainQueue().addOperationWithBlock({
-            completionHandler(result)
-            })
-        })
+        let task = session.dataTaskWithRequest(request) { data, response, error in
+            let result: FetchCoursesResult
+            = self.resultFromData(data, response: response, error: error)
+            
+            NSOperationQueue.mainQueue().addOperationWithBlock {
+                completionHandler(result)
+            }
+        }
         task.resume()
     }
     
     
     func errorWithCode(code: Int, localizedDescription: String) -> NSError {
-            return NSError(domain: "ScheduleFetcher",
-                             code: code,
-                         userInfo: [NSLocalizedDescriptionKey: localizedDescription])
+        return NSError(domain: "ScheduleFetcher",
+            code: code,
+            userInfo: [NSLocalizedDescriptionKey: localizedDescription])
     }
     
     
@@ -55,7 +66,7 @@ public class ScheduleFetcher {
         
         let url = NSURL(string: urlString)!
         
-        var dateFormatter = NSDateFormatter()
+        let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let nextStartDate = dateFormatter.dateFromString(nextStartDateString)!
         
@@ -63,48 +74,51 @@ public class ScheduleFetcher {
     }
     
     
-    func resultFromData(data: NSData) -> FetchCoursesResult {
-        var error: NSError?
-        let topLevelDict = NSJSONSerialization.JSONObjectWithData(data,
-                options: NSJSONReadingOptions.allZeros,
-                error: &error) as! NSDictionary?
+    func coursesFromData(data: NSData) throws -> [Course] {
+        let topLevelDict = try NSJSONSerialization.JSONObjectWithData(data,
+            options: [])
+            as! NSDictionary
         
-        if let topLevelDict = topLevelDict {
-            let courseDicts = topLevelDict["courses"] as! [NSDictionary]
-            var courses: [Course] = []
-            for courseDict in courseDicts {
-                if let course = courseFromDictionary(courseDict) {
-                    courses.append(course)
-                }
+        let courseDicts = topLevelDict["courses"] as! [NSDictionary]
+        var courses: [Course] = []
+        for courseDict in courseDicts {
+            if let course = courseFromDictionary(courseDict) {
+                courses.append(course)
             }
-            return .Success(courses)
         }
-        else {
-            return .Failure(error!)
-        }
+        return courses
     }
     
     
-    public func resultFromData(data: NSData!, response: NSURLResponse!, error: NSError!) -> FetchCoursesResult {
-        var result: FetchCoursesResult
-        if data == nil {
-            result = .Failure(error)
-        }
-            else if let response = response as? NSHTTPURLResponse {
-            println("\(data.length) bytes, HTTP \(response.statusCode).")
-            if response.statusCode == 200 {
-                result = self.resultFromData(data)
-            }
+    public func resultFromData(data: NSData?, response: NSURLResponse?, error: NSError?)
+        -> FetchCoursesResult {
+            let result: FetchCoursesResult
+            
+            if let data = data {
+                if let response = response as? NSHTTPURLResponse {
+                    print("\(data.length) bytes, HTTP \(response.statusCode).")
+                    if response.statusCode == 200 {
+                        result = FetchCoursesResult { try self.coursesFromData(data) }
+                    }
+                    else {
+                        let error =
+                        self.errorWithCode(2, localizedDescription:
+                            "Bad status code \(response.statusCode)")
+                        result = .Failure(error)
+                    }
+                }
                 else {
-                let error = self.errorWithCode(1, localizedDescription: "Bad status code \(response.statusCode)")
-                result = .Failure(error)
+                    let error =
+                    self.errorWithCode(1, localizedDescription:
+                        "Unexpected response object.")
+                    result = .Failure(error)
+                }
             }
-        }
             else {
-            let error = self.errorWithCode(1, localizedDescription: "Unexpected response object.")
-            result = .Failure(error)
-        }
-        return result
+                result = .Failure(error!)
+            }
+            
+            return result
     }
     
 }

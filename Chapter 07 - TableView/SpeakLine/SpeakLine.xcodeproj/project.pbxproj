@@ -156,6 +156,7 @@
 		7D6CDB1D1A97E6AE00E8D534 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = "Big Nerd Ranch";
 				TargetAttributes = {
@@ -402,6 +403,7 @@
 				7D6CDB411A97E6AE00E8D534 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7D6CDB421A97E6AE00E8D534 /* Build configuration list for PBXNativeTarget "SpeakLineTests" */ = {
 			isa = XCConfigurationList;
@@ -410,6 +412,7 @@
 				7D6CDB441A97E6AE00E8D534 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

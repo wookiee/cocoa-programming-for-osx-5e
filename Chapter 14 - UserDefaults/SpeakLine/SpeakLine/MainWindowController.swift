@@ -23,7 +23,7 @@ class MainWindowController: NSWindowController, NSSpeechSynthesizerDelegate, NSW
     let preferenceManager = PreferenceManager()
     let speechSynth: NSSpeechSynthesizer = NSSpeechSynthesizer()
     
-    let voices = NSSpeechSynthesizer.availableVoices() as! [String]
+    let voices = NSSpeechSynthesizer.availableVoices()
     
     var isStarted: Bool = false {
         didSet {
@@ -37,7 +37,7 @@ class MainWindowController: NSWindowController, NSSpeechSynthesizerDelegate, NSW
         updateButtons()
         speechSynth.delegate = self
         let defaultVoice = preferenceManager.activeVoice!
-        if let defaultRow = find(voices, defaultVoice) {
+        if let defaultRow = voices.indexOf(defaultVoice) {
             let indices = NSIndexSet(index: defaultRow)
             tableView.selectRowIndexes(indices, byExtendingSelection: false)
             tableView.scrollRowToVisible(defaultRow)
@@ -52,7 +52,7 @@ class MainWindowController: NSWindowController, NSSpeechSynthesizerDelegate, NSW
         // Get typed-in text as a string
         let string = textField.stringValue
         if string.isEmpty {
-            println("string from \(textField) is empty")
+            print("string from \(textField) is empty")
         } else {
             speechSynth.startSpeakingString(string)
             isStarted = true
@@ -76,11 +76,16 @@ class MainWindowController: NSWindowController, NSSpeechSynthesizerDelegate, NSW
         }
     }
     
+    func voiceNameForIdentifier(identifier: String) -> String? {
+        let attributes = NSSpeechSynthesizer.attributesForVoice(identifier)
+        return attributes[NSVoiceName] as? String
+    }
+
     
     // MARK: NSSpeechSynthesizerDelegate
     func speechSynthesizer(sender: NSSpeechSynthesizer, didFinishSpeaking finishedSpeaking: Bool) {
         isStarted = false
-        println("finishedSpeaking=\(finishedSpeaking)")
+        print("finishedSpeaking=\(finishedSpeaking)")
     }
     
     
@@ -98,11 +103,8 @@ class MainWindowController: NSWindowController, NSSpeechSynthesizerDelegate, NSW
  
     func tableView(tableView: NSTableView, objectValueForTableColumn tableColumn: NSTableColumn?, row: Int) -> AnyObject? {
         let voice = voices[row]
-        if let attributes = NSSpeechSynthesizer.attributesForVoice(voice) {
-            return attributes[NSVoiceName]
-        } else {
-            return nil
-        }
+        let voiceName = voiceNameForIdentifier(voice)
+        return voiceName
     }
     
     
