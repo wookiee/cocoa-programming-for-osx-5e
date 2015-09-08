@@ -16,6 +16,13 @@ This edition was written for Xcode 6.3 on OS X Yosemite 10.10 with Swift 1.2.
 As with any technology, as Apple releases new versions you may encounter surprises.
 Where possible we will update the errata to call attention to these changes.
 
+## Swift 2 Transition Guide
+
+At WWDC 2015, Apple announced Xcode 7 and Swift 2, both of which introduce 
+significant updates. Those changes, and to a lesser extent changes to Cocoa for 
+OS X 10.11, necessitate a companion guide for using Xcode 7 to work through 
+the exercises in the book.  That companion guide is [here](./Swift2.md).
+
 ## Learn at Big Nerd Ranch
 
 If you would like to learn Cocoa from one of us live and in person in a monastic,
