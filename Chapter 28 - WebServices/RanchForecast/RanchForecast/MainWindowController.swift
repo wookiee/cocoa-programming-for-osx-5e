@@ -28,7 +28,7 @@ class MainWindowController: NSWindowController {
         tableView.target = self
         tableView.doubleAction = Selector("openClass:")
         
-        fetcher.fetchCoursesUsingCompletionHandler { (result) in
+        fetcher.fetchCoursesUsingCompletionHandler { result in
             switch result {
             case .Success(let courses):
                 println("Got courses: \(courses)")

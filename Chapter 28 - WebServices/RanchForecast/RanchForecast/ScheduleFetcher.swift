@@ -24,12 +24,11 @@ class ScheduleFetcher {
     }
     
     
-    func fetchCoursesUsingCompletionHandler(completionHandler: (FetchCoursesResult) -> (Void)) {
+    func fetchCoursesUsingCompletionHandler(completionHandler: FetchCoursesResult -> Void) {
         let url = NSURL(string: "http://bookapi.bignerdranch.com/courses.json")!
         let request = NSURLRequest(URL: url)
         
-        let task = session.dataTaskWithRequest(request, completionHandler: {
-            (data, response, error) -> Void in
+        let task = session.dataTaskWithRequest(request) { data, response, error in
             var result: FetchCoursesResult
             if data == nil {
                 result = .Failure(error)
@@ -40,7 +39,7 @@ class ScheduleFetcher {
                     result = self.resultFromData(data)
                 }
                 else {
-                    let error = self.errorWithCode(1, localizedDescription: "Bad status code \(response.statusCode)")
+                    let error = self.errorWithCode(2, localizedDescription: "Bad status code \(response.statusCode)")
                     result = .Failure(error)
                 }
             }
@@ -49,10 +48,10 @@ class ScheduleFetcher {
                 result = .Failure(error)
             }
         
-            NSOperationQueue.mainQueue().addOperationWithBlock({
-            completionHandler(result)
-            })
-        })
+            NSOperationQueue.mainQueue().addOperationWithBlock {
+                completionHandler(result)
+            }
+        }
         task.resume()
     }
     
@@ -73,7 +72,7 @@ class ScheduleFetcher {
         
         let url = NSURL(string: urlString)!
         
-        var dateFormatter = NSDateFormatter()
+        let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let nextStartDate = dateFormatter.dateFromString(nextStartDateString)!
         
