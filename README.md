@@ -1,4 +1,7 @@
 # Cocoa Programming for OS X, 5th Edition
+
+This branch contains solutions for Swift 1.2.  For Swift 2.0, see [the master branch](../../.).
+
 ## Solutions and Errata
 
 This repository contains the solutions and errata for [Cocoa Programming for OS X - The Big Nerd Ranch Guide][book],
@@ -11,10 +14,6 @@ challenge solution (or quest for a solution!) on the [forum for this book][forum
 [`Errata.md`](./Errata.md) contains a list of all errata that have
 been found in the book. If you think you have found a bug, please make a post
 on [the forum][forum].
-
-This edition was written for Xcode 6.3 on OS X Yosemite 10.10 with Swift 1.2.
-As with any technology, as Apple releases new versions you may encounter surprises.
-Where possible we will update the errata to call attention to these changes.
 
 ## Learn at Big Nerd Ranch
 
