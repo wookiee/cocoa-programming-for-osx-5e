@@ -1,4 +1,7 @@
 # Cocoa Programming for OS X, 5th Edition
+
+This branch contains solutions and the companion guide for Swift 2.0.  If you are using Swift 1.2, see [the swift1-2 branch](../../tree/swift1-2).
+
 ## Solutions and Errata
 
 This repository contains the solutions and errata for [Cocoa Programming for OS X - The Big Nerd Ranch Guide][book],
