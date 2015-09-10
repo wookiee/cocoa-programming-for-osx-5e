@@ -4,7 +4,7 @@ The 5th edition of Cocoa Programming for OS X: The Big Nerd Ranch Guide was writ
 
 If you have old projects written in Swift 1.2 using Xcode 6, when you open them in Xcode 7 you will be presented with a dialog that will help you migrate your project to the latest version of Swift. This migration, while very helpful, is not bulletproof. This guide will answer any questions which are not covered by the migration tool. For additional discussion, join us on the [Big Nerd Ranch forums](http://forums.bignerdranch.com/viewforum.php?f=520).
 
-The exercise solutions have been updated for Swift 2 as well.  They are available [here](../..).
+The exercise solutions have been updated for Swift 2 as well.  They are [available here](../..).  If you are still working with Swift 1.2, those solutions are [still available](../../tree/swift1-2).
 
 ### Common Changes
 
