@@ -437,14 +437,14 @@ Note that this is a safe operation. The object from which the JSON data is being
 
 p. 451: A few changes in Swift 2 and OS X 10.11 affect the implementation of `NerdTabViewController.selectTabAtIndex(_:)`:
 
-1. The free function `contains(_:_:)` from Swift 1.2 has been replaced with the method `SequenceType.contains(_:)` on `SequenceType`. One result of this is that it is much less pleasant to test whether a value is inside a range using range literal syntax (`0..<count`).
+1. The free function `contains(_:_:)` from Swift 1.2 has been replaced with the method `SequenceType.contains(_:)` on `SequenceType`.
 2. The free function `enumerate(_:)` from Swift 1.2 has been replaced with the method `SequenceType.enumerate()` on `SequenceType`.
 3. The `NSViewController` header has been audited so that the type of `NSViewController.childViewControllers` is now `[NSViewController]` rather than `[AnyObject]`. As a result, it is no longer necessary to cast elements of the array to that type.
 
 These three changes combine to yield the following implementation of `selectTabAtIndex(_:)`:
 
     func selectTabAtIndex(index: Int) {
-        assert(Range(start: 0, end: childViewControllers.count).contains(index), "index out of range")
+        assert((0..<childViewControllers.count).contains(index), "index out of range")
         for (i, button) in buttons.enumerate() {
             button.state = (index == i) ? NSOnState : NSOffState
         }
