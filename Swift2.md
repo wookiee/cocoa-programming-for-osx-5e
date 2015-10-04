@@ -444,7 +444,8 @@ p. 451: A few changes in Swift 2 and OS X 10.11 affect the implementation of `Ne
 These three changes combine to yield the following implementation of `selectTabAtIndex(_:)`:
 
     func selectTabAtIndex(index: Int) {
-        assert((0..<childViewControllers.count).contains(index), "index out of range")
+        let range = 0..<childViewControllers.count
+        assert(range.contains(index), "index out of range")
         for (i, button) in buttons.enumerate() {
             button.state = (index == i) ? NSOnState : NSOffState
         }
