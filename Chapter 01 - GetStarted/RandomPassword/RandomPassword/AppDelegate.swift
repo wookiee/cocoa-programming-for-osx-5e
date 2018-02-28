@@ -13,8 +13,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     var mainWindowController: MainWindowController?
 
-
-    func applicationDidFinishLaunching(aNotification: NSNotification) {
+    func applicationDidFinishLaunching(_ notification: Notification) {
         // Create a window controller with a XIB file of the same name
         let mainWindowController = MainWindowController()
         
@@ -24,11 +23,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Set the property to point to the window controller
         self.mainWindowController = mainWindowController
     }
-
+  
     func applicationWillTerminate(aNotification: NSNotification) {
         // Insert code here to tear down your application
     }
-
 
 }
 

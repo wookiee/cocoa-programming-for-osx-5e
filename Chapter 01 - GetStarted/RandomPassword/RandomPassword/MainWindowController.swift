@@ -12,8 +12,8 @@ class MainWindowController: NSWindowController {
 
     @IBOutlet weak var textField: NSTextField!
     
-    override var windowNibName: String? {
-        return "MainWindowController"
+    override var windowNibName: NSNib.Name? {
+        return NSNib.Name(rawValue: "MainWindowController")
     }
     
     override func windowDidLoad() {
