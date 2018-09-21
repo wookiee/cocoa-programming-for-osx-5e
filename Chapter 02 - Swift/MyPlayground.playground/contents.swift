@@ -72,7 +72,18 @@ else {
     // do something else
 }
 
-for var i = 0; i < countingUp.count; i++ {
+// Old C-style for loop has been removed from Swift as of version 3.
+/*for var i = 0; i < countingUp.count; i++ {
+    let string = countingUp[i]
+}*/
+
+// Use for i in range syntax instead when incrementing by 1
+for i in 0..<countingUp.count {
+    let string = countingUp[i]
+}
+
+// Alternatively use the stride syntax which allows different increments
+for i in stride(from:0, to: countingUp.count, by: 1) {
     let string = countingUp[i]
 }
 
@@ -85,7 +96,7 @@ for string in countingUp {
     
 }
 
-for (i, string) in countingUp.enumerate() {
+for (i, string) in countingUp.enumerated() {
     
 }
 
