@@ -10,21 +10,10 @@
 		43DA80C61AE5754800B48DD0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DA80C51AE5754800B48DD0 /* AppDelegate.swift */; };
 		43DA80C81AE5754800B48DD0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43DA80C71AE5754800B48DD0 /* Images.xcassets */; };
 		43DA80CB1AE5754800B48DD0 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43DA80C91AE5754800B48DD0 /* MainMenu.xib */; };
-		43DA80D71AE5754900B48DD0 /* RandomPasswordTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DA80D61AE5754900B48DD0 /* RandomPasswordTests.swift */; };
 		43DA80E21AE5826D00B48DD0 /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DA80E01AE5826D00B48DD0 /* MainWindowController.swift */; };
 		43DA80E31AE5826D00B48DD0 /* MainWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43DA80E11AE5826D00B48DD0 /* MainWindowController.xib */; };
 		43DA80E51AE5855600B48DD0 /* GeneratePassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DA80E41AE5855600B48DD0 /* GeneratePassword.swift */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		43DA80D11AE5754900B48DD0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 43DA80B81AE5754800B48DD0 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 43DA80BF1AE5754800B48DD0;
-			remoteInfo = RandomPassword;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		43DA80C01AE5754800B48DD0 /* RandomPassword.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RandomPassword.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -32,9 +21,6 @@
 		43DA80C51AE5754800B48DD0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		43DA80C71AE5754800B48DD0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		43DA80CA1AE5754800B48DD0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		43DA80D01AE5754900B48DD0 /* RandomPasswordTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RandomPasswordTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		43DA80D51AE5754900B48DD0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		43DA80D61AE5754900B48DD0 /* RandomPasswordTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomPasswordTests.swift; sourceTree = "<group>"; };
 		43DA80E01AE5826D00B48DD0 /* MainWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
 		43DA80E11AE5826D00B48DD0 /* MainWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindowController.xib; sourceTree = "<group>"; };
 		43DA80E41AE5855600B48DD0 /* GeneratePassword.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratePassword.swift; sourceTree = "<group>"; };
@@ -48,13 +34,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		43DA80CD1AE5754900B48DD0 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -62,7 +41,6 @@
 			isa = PBXGroup;
 			children = (
 				43DA80C21AE5754800B48DD0 /* RandomPassword */,
-				43DA80D31AE5754900B48DD0 /* RandomPasswordTests */,
 				43DA80C11AE5754800B48DD0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -71,7 +49,6 @@
 			isa = PBXGroup;
 			children = (
 				43DA80C01AE5754800B48DD0 /* RandomPassword.app */,
-				43DA80D01AE5754900B48DD0 /* RandomPasswordTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -98,23 +75,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		43DA80D31AE5754900B48DD0 /* RandomPasswordTests */ = {
-			isa = PBXGroup;
-			children = (
-				43DA80D61AE5754900B48DD0 /* RandomPasswordTests.swift */,
-				43DA80D41AE5754900B48DD0 /* Supporting Files */,
-			);
-			path = RandomPasswordTests;
-			sourceTree = "<group>";
-		};
-		43DA80D41AE5754900B48DD0 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				43DA80D51AE5754900B48DD0 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -135,40 +95,18 @@
 			productReference = 43DA80C01AE5754800B48DD0 /* RandomPassword.app */;
 			productType = "com.apple.product-type.application";
 		};
-		43DA80CF1AE5754900B48DD0 /* RandomPasswordTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 43DA80DD1AE5754900B48DD0 /* Build configuration list for PBXNativeTarget "RandomPasswordTests" */;
-			buildPhases = (
-				43DA80CC1AE5754900B48DD0 /* Sources */,
-				43DA80CD1AE5754900B48DD0 /* Frameworks */,
-				43DA80CE1AE5754900B48DD0 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				43DA80D21AE5754900B48DD0 /* PBXTargetDependency */,
-			);
-			name = RandomPasswordTests;
-			productName = RandomPasswordTests;
-			productReference = 43DA80D01AE5754900B48DD0 /* RandomPasswordTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		43DA80B81AE5754800B48DD0 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0700;
+				LastSwiftUpdateCheck = 1000;
+				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = "Big Nerd Ranch";
 				TargetAttributes = {
 					43DA80BF1AE5754800B48DD0 = {
 						CreatedOnToolsVersion = 6.3;
-					};
-					43DA80CF1AE5754900B48DD0 = {
-						CreatedOnToolsVersion = 6.3;
-						TestTargetID = 43DA80BF1AE5754800B48DD0;
 					};
 				};
 			};
@@ -186,7 +124,6 @@
 			projectRoot = "";
 			targets = (
 				43DA80BF1AE5754800B48DD0 /* RandomPassword */,
-				43DA80CF1AE5754900B48DD0 /* RandomPasswordTests */,
 			);
 		};
 /* End PBXProject section */
@@ -199,13 +136,6 @@
 				43DA80C81AE5754800B48DD0 /* Images.xcassets in Resources */,
 				43DA80E31AE5826D00B48DD0 /* MainWindowController.xib in Resources */,
 				43DA80CB1AE5754800B48DD0 /* MainMenu.xib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		43DA80CE1AE5754900B48DD0 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -222,23 +152,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		43DA80CC1AE5754900B48DD0 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				43DA80D71AE5754900B48DD0 /* RandomPasswordTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		43DA80D21AE5754900B48DD0 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 43DA80BF1AE5754800B48DD0 /* RandomPassword */;
-			targetProxy = 43DA80D11AE5754900B48DD0 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		43DA80C91AE5754800B48DD0 /* MainMenu.xib */ = {
@@ -260,13 +174,23 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "-";
@@ -289,11 +213,12 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -305,13 +230,23 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "-";
@@ -327,9 +262,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -357,44 +294,6 @@
 			};
 			name = Release;
 		};
-		43DA80DE1AE5754900B48DD0 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = RandomPasswordTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.bignerdranch.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RandomPassword.app/Contents/MacOS/RandomPassword";
-			};
-			name = Debug;
-		};
-		43DA80DF1AE5754900B48DD0 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = RandomPasswordTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.bignerdranch.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RandomPassword.app/Contents/MacOS/RandomPassword";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -412,15 +311,6 @@
 			buildConfigurations = (
 				43DA80DB1AE5754900B48DD0 /* Debug */,
 				43DA80DC1AE5754900B48DD0 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		43DA80DD1AE5754900B48DD0 /* Build configuration list for PBXNativeTarget "RandomPasswordTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				43DA80DE1AE5754900B48DD0 /* Debug */,
-				43DA80DF1AE5754900B48DD0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
