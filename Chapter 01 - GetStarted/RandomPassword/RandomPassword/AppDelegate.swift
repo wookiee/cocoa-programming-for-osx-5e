@@ -13,8 +13,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     var mainWindowController: MainWindowController?
 
-
-    func applicationDidFinishLaunching(aNotification: NSNotification) {
+    func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Create a window controller with a XIB file of the same name
         let mainWindowController = MainWindowController()
         
