@@ -15,8 +15,8 @@ class MainWindowController: NSWindowController {
     @IBOutlet weak var bSlider: NSSlider!
     @IBOutlet weak var colorWell: NSColorWell!
     
-    override var windowNibName: String {
-        return "MainWindowController"
+    override var windowNibName: NSNib.Name? {
+        return NSNib.Name("MainWindowController")
     }
     
     var r: Float = 0.5

@@ -14,7 +14,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var mainWindowController: MainWindowController?
     
     
-    func applicationDidFinishLaunching(aNotification: NSNotification) {
+    func applicationDidFinishLaunching(_ aNotification: Notification) {
         mainWindowController = MainWindowController()
         mainWindowController!.showWindow(self)
         
