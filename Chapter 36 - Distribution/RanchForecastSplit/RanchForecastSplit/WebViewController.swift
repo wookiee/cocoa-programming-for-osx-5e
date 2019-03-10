@@ -11,17 +11,7 @@ import WebKit
 
 
 class WebViewController: NSViewController {
-    
-    var webView: WKWebView {
-        return view as! WKWebView
-    }
-    
-    
-    override func loadView() {
-        let webView = WKWebView()
-        view = webView
-    }
-    
+    @IBOutlet weak var webView: WKWebView!
     
     func loadURL(_ url: URL) {
         let request = URLRequest(url: url)

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <deployment identifier="macosx"/>
+        <deployment version="101200" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <plugIn identifier="com.apple.WebKit2IBPlugin" version="14460.31"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -732,9 +733,8 @@
                                                             <rect key="frame" x="1" y="1" width="116" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
-                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ho3-SA-UbZ">
+                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="ho3-SA-UbZ">
                                                                     <rect key="frame" x="0.0" y="0.0" width="100" height="17"/>
-                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="95h-j4-thM">
                                                                         <dateFormatter key="formatter" dateStyle="short" id="Tov-Vm-kwm"/>
                                                                         <font key="font" metaFont="system"/>
@@ -746,6 +746,11 @@
                                                                     </connections>
                                                                 </textField>
                                                             </subviews>
+                                                            <constraints>
+                                                                <constraint firstAttribute="trailing" secondItem="ho3-SA-UbZ" secondAttribute="trailing" constant="18" id="2qH-Gg-jGo"/>
+                                                                <constraint firstItem="ho3-SA-UbZ" firstAttribute="centerY" secondItem="8p5-CP-AaZ" secondAttribute="centerY" id="LOB-DQ-e1f"/>
+                                                                <constraint firstItem="ho3-SA-UbZ" firstAttribute="leading" secondItem="8p5-CP-AaZ" secondAttribute="leading" constant="2" id="ViV-Fp-FSY"/>
+                                                            </constraints>
                                                             <connections>
                                                                 <outlet property="textField" destination="ho3-SA-UbZ" id="n8L-4n-knl"/>
                                                             </connections>
@@ -769,9 +774,8 @@
                                                             <rect key="frame" x="120" y="1" width="62" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
-                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y7E-8e-0bI">
+                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="y7E-8e-0bI">
                                                                     <rect key="frame" x="0.0" y="0.0" width="100" height="17"/>
-                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="tlr-RD-BoJ">
                                                                         <font key="font" metaFont="system"/>
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -782,6 +786,11 @@
                                                                     </connections>
                                                                 </textField>
                                                             </subviews>
+                                                            <constraints>
+                                                                <constraint firstItem="y7E-8e-0bI" firstAttribute="centerY" secondItem="Fbg-u8-LXa" secondAttribute="centerY" id="CPk-qY-qkd"/>
+                                                                <constraint firstAttribute="trailing" secondItem="y7E-8e-0bI" secondAttribute="trailing" constant="-36" id="UQ7-XB-O87"/>
+                                                                <constraint firstItem="y7E-8e-0bI" firstAttribute="leading" secondItem="Fbg-u8-LXa" secondAttribute="leading" constant="2" id="V8b-sT-Gr3"/>
+                                                            </constraints>
                                                             <connections>
                                                                 <outlet property="textField" destination="y7E-8e-0bI" id="waj-MU-nGT"/>
                                                             </connections>
@@ -841,7 +850,25 @@
                     <view key="view" id="QvX-Dw-Tb1">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <wkWebView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="id1-aU-EfZ">
+                                <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="id1-aU-EfZ" secondAttribute="trailing" id="3H7-8k-C9k"/>
+                            <constraint firstAttribute="bottom" secondItem="id1-aU-EfZ" secondAttribute="bottom" id="R3i-oo-ZAf"/>
+                            <constraint firstItem="id1-aU-EfZ" firstAttribute="leading" secondItem="QvX-Dw-Tb1" secondAttribute="leading" id="XAT-85-uhX"/>
+                            <constraint firstItem="id1-aU-EfZ" firstAttribute="top" secondItem="QvX-Dw-Tb1" secondAttribute="top" id="YLF-Bm-29x"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="webView" destination="id1-aU-EfZ" id="G7G-vj-5Im"/>
+                    </connections>
                 </viewController>
                 <customObject id="TNb-Zg-H30" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
