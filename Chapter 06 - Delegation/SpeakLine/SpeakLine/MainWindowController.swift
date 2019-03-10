@@ -74,7 +74,7 @@ class MainWindowController: NSWindowController, NSSpeechSynthesizerDelegate, NSW
     
     
     // MARK: NSWindowDelegate
-    func windowShouldClose(_ sender: Any) -> Bool {
+    func windowShouldClose(_ sender: NSWindow) -> Bool {
         if isStarted {
             return !isStarted
         } else {

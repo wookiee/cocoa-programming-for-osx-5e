@@ -15,7 +15,7 @@ class MainWindowController: NSWindowController {
     }
 
     var internalTemperature = 68
-    dynamic var temperature: Int {
+    @objc dynamic var temperature: Int {
         set {
             print("set temperature to \(newValue)")
             internalTemperature = newValue
@@ -25,7 +25,7 @@ class MainWindowController: NSWindowController {
             return internalTemperature
         }
     }
-    dynamic var isOn = true
+    @objc dynamic var isOn = true
     
     @IBAction func makeWarmer(_ sender: NSButton) {
         willChangeValue(forKey: "temperature")

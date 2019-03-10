@@ -22,7 +22,7 @@ class MainWindowController: NSWindowController, NSSpeechSynthesizerDelegate, NSW
     
     let speechSynth: NSSpeechSynthesizer = NSSpeechSynthesizer()
     
-    let voices = NSSpeechSynthesizer.availableVoices()
+    let voices = NSSpeechSynthesizer.availableVoices
     
     var isStarted: Bool = false {
         didSet {
@@ -35,7 +35,7 @@ class MainWindowController: NSWindowController, NSSpeechSynthesizerDelegate, NSW
         super.windowDidLoad()
         updateButtons()
         speechSynth.delegate = self
-        let defaultVoice = NSSpeechSynthesizer.defaultVoice()
+        let defaultVoice = NSSpeechSynthesizer.defaultVoice
         if let defaultRow = voices.index(of: defaultVoice) {
             let indices = IndexSet(integer: defaultRow)
             tableView.selectRowIndexes(indices, byExtendingSelection: false)
@@ -75,8 +75,8 @@ class MainWindowController: NSWindowController, NSSpeechSynthesizerDelegate, NSW
     }
     
     func voiceNameForIdentifier(_ identifier: String) -> String? {
-        let attributes = NSSpeechSynthesizer.attributes(forVoice: identifier)
-        return attributes[NSVoiceName] as? String
+        let attributes = convertFromNSSpeechSynthesizerVoiceAttributeKeyDictionary(NSSpeechSynthesizer.attributes(forVoice: NSSpeechSynthesizer.VoiceName(rawValue: identifier)))
+        return attributes[convertFromNSSpeechSynthesizerVoiceAttributeKey(NSSpeechSynthesizer.VoiceAttributeKey.name)] as? String
     }
     
     
@@ -88,7 +88,7 @@ class MainWindowController: NSWindowController, NSSpeechSynthesizerDelegate, NSW
     
     
     // MARK: NSWindowDelegate
-    func windowShouldClose(_ sender: Any) -> Bool {
+    func windowShouldClose(_ sender: NSWindow) -> Bool {
         return !isStarted
     }
     
@@ -101,7 +101,7 @@ class MainWindowController: NSWindowController, NSSpeechSynthesizerDelegate, NSW
  
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
         let voice = voices[row]
-        let voiceName = voiceNameForIdentifier(voice)
+        let voiceName = voiceNameForIdentifier(voice.rawValue)
         return voiceName
     }
     
@@ -116,7 +116,23 @@ class MainWindowController: NSWindowController, NSSpeechSynthesizerDelegate, NSW
         return
         }
         let voice = voices[row]
-        speechSynth.setVoice(voice)
+        speechSynth.setVoice(convertToOptionalNSSpeechSynthesizerVoiceName(voice.rawValue))
     }
     
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSSpeechSynthesizerVoiceAttributeKeyDictionary(_ input: [NSSpeechSynthesizer.VoiceAttributeKey: Any]) -> [String: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSSpeechSynthesizerVoiceAttributeKey(_ input: NSSpeechSynthesizer.VoiceAttributeKey) -> String {
+	return input.rawValue
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSSpeechSynthesizerVoiceName(_ input: String?) -> NSSpeechSynthesizer.VoiceName? {
+	guard let input = input else { return nil }
+	return NSSpeechSynthesizer.VoiceName(rawValue: input)
 }

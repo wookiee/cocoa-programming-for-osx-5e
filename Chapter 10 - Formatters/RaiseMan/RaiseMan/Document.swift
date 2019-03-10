@@ -10,7 +10,7 @@ import Cocoa
 
 class Document: NSDocument {
 
-    var employees: [Employee] = []
+    @objc var employees: [Employee] = []
     
     override init() {
         super.init()
@@ -22,7 +22,7 @@ class Document: NSDocument {
         // Add any code here that needs to be executed once the windowController has loaded the document's window.
     }
 
-    override class func autosavesInPlace() -> Bool {
+    override class var autosavesInPlace: Bool {
         return true
     }
 
