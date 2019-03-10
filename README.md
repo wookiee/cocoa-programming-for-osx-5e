@@ -1,6 +1,6 @@
-# Cocoa Programming for OS X, 5th Edition
+# Cocoa Programming for macOS, 5th Edition
 
-This branch contains solutions and the companion guide for Swift 2.0.  If you are using Swift 1.2, see [the swift1-2 branch](../../tree/swift1-2).
+This branch contains solutions for Swift 5.0 and the companion guide for Swift 2.0.  If you are using Swift 1.2, see [the swift1-2 branch](../../tree/swift1-2).
 
 ## Solutions and Errata
 
