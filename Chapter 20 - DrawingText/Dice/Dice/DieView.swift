@@ -97,13 +97,13 @@ class DieView: NSView {
 				}
 			}
 			else {
-				let paraStyle = NSParagraphStyle.default().mutableCopy() as! NSMutableParagraphStyle
+				let paraStyle = NSParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
 				paraStyle.alignment = .center
 				let font = NSFont.systemFont(ofSize: edgeLength * 0.6)
 				let attrs = [
-					NSForegroundColorAttributeName: NSColor.black,
-							   NSFontAttributeName: font,
-					 NSParagraphStyleAttributeName: paraStyle ]
+					convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor): NSColor.black,
+							   convertFromNSAttributedStringKey(NSAttributedString.Key.font): font,
+					 convertFromNSAttributedStringKey(NSAttributedString.Key.paragraphStyle): paraStyle ]
 				let string = "\(intValue)" as NSString
 				string.drawCenteredInRect(dieFrame, attributes: attrs)
 			}
@@ -115,7 +115,7 @@ class DieView: NSView {
 		savePanel.allowedFileTypes = ["pdf"]
 		savePanel.beginSheetModal(for: window!) {
 			[unowned savePanel] (result) in
-			if result == NSModalResponseOK {
+			if result == NSApplication.ModalResponse.OK {
 				let data = self.dataWithPDF(inside: self.bounds)
                 do {
 					try data.write(to: savePanel.url!,
@@ -190,4 +190,9 @@ class DieView: NSView {
 		window?.selectPreviousKeyView(sender)
 	}
 
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
+	return input.rawValue
 }

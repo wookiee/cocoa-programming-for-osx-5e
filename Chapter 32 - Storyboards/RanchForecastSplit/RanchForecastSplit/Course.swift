@@ -9,9 +9,9 @@
 import Foundation
 
 open class Course: NSObject {
-    open let title: String
-    open let url: URL
-    open let nextStartDate: Date
+    @objc open let title: String
+    @objc open let url: URL
+    @objc open let nextStartDate: Date
     
     public init(title: String, url: URL, nextStartDate: Date) {
         self.title = title

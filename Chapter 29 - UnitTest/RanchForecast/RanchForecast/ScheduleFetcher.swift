@@ -40,7 +40,7 @@ open class ScheduleFetcher {
         
         let task = session.dataTask(with: request, completionHandler: { data, response, error in
             let result: FetchCoursesResult
-                = self.resultFromData(data, response: response, error: error as! NSError)
+                = self.resultFromData(data, response: response, error: error as NSError?)
             
             OperationQueue.main.addOperation {
                 completionHandler(result)

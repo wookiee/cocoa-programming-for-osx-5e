@@ -41,7 +41,7 @@ class DieView: NSView, NSDraggingSource {
 	}
 	
 	func commonInit() {
-		self.register(forDraggedTypes: [NSPasteboardTypeString])
+		self.registerForDraggedTypes(convertToNSPasteboardPasteboardTypeArray([convertFromNSPasteboardPasteboardType(NSPasteboard.PasteboardType.string)]))
 	}
 
 	
@@ -126,13 +126,13 @@ class DieView: NSView, NSDraggingSource {
 				}
 			}
 			else {
-				let paraStyle = NSParagraphStyle.default().mutableCopy() as! NSMutableParagraphStyle
+				let paraStyle = NSParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
 				paraStyle.alignment = .center
 				let font = NSFont.systemFont(ofSize: edgeLength * 0.6)
 				let attrs = [
-					NSForegroundColorAttributeName: NSColor.black,
-							   NSFontAttributeName: font,
-					 NSParagraphStyleAttributeName: paraStyle ]
+					convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor): NSColor.black,
+							   convertFromNSAttributedStringKey(NSAttributedString.Key.font): font,
+					 convertFromNSAttributedStringKey(NSAttributedString.Key.paragraphStyle): paraStyle ]
 				let string = "\(intValue)" as NSString
 				string.drawCenteredInRect(dieFrame, attributes: attrs)
 			}
@@ -144,7 +144,7 @@ class DieView: NSView, NSDraggingSource {
 		savePanel.allowedFileTypes = ["pdf"]
         savePanel.beginSheetModal(for: window!) {
             [unowned savePanel] (result) in
-            if result == NSModalResponseOK {
+            if result == NSApplication.ModalResponse.OK {
                 let data = self.dataWithPDF(inside: self.bounds)
                 do {
                     try data.write(to: savePanel.url!,
@@ -196,7 +196,7 @@ class DieView: NSView, NSDraggingSource {
 			let item = NSDraggingItem(pasteboardWriter: "\(intValue)" as NSPasteboardWriting)
 			item.draggingFrame = draggingFrame
 			item.imageComponentsProvider = {
-				let component = NSDraggingImageComponent(key: NSDraggingImageComponentIconKey)
+				let component = NSDraggingImageComponent(key: NSDraggingItem.ImageComponentKey.icon)
 				component.contents = image
 				component.frame = NSRect(origin: NSPoint(), size: imageSize)
 				return [component]
@@ -228,11 +228,13 @@ class DieView: NSView, NSDraggingSource {
 	// MARK: - Drag Destination
 
 	override func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation {
-		if sender.draggingSource() === self {
-			return NSDragOperation()
-		}
+        if let source = sender.draggingSource as? DieView {
+            if source === self {
+                return NSDragOperation()
+            }
+        }
 		highlightForDragging = true
-		return sender.draggingSourceOperationMask()
+		return sender.draggingSourceOperationMask
 	}
 
 	override func draggingExited(_ sender: NSDraggingInfo?) {
@@ -244,7 +246,7 @@ class DieView: NSView, NSDraggingSource {
 	}
 	
 	override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
-		let ok = readFromPasteboard(sender.draggingPasteboard())
+		let ok = readFromPasteboard(sender.draggingPasteboard)
 		return ok
 	}
 	
@@ -304,7 +306,7 @@ class DieView: NSView, NSDraggingSource {
 	}
 	
 	func readFromPasteboard(_ pasteboard: NSPasteboard) -> Bool {
-		let objects = pasteboard.readObjects(forClasses: [NSString.self], options: [:]) as! [String]
+		let objects = pasteboard.readObjects(forClasses: [NSString.self], options: convertToOptionalNSPasteboardReadingOptionKeyDictionary([:])) as! [String]
 		if let str = objects.first {
 			intValue = Int(str)
 			return true
@@ -313,14 +315,35 @@ class DieView: NSView, NSDraggingSource {
 	}
 	
 	@IBAction func cut(_ sender: AnyObject?) {
-		writeToPasteboard(NSPasteboard.general())
+		writeToPasteboard(NSPasteboard.general)
 		intValue = nil
 	}
 	@IBAction func copy(_ sender: AnyObject?) {
-		writeToPasteboard(NSPasteboard.general())
+		writeToPasteboard(NSPasteboard.general)
 	}
 	@IBAction func paste(_ sender: AnyObject?) {
-		readFromPasteboard(NSPasteboard.general())
+		readFromPasteboard(NSPasteboard.general)
 	}
 
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToNSPasteboardPasteboardTypeArray(_ input: [String]) -> [NSPasteboard.PasteboardType] {
+	return input.map { key in NSPasteboard.PasteboardType(key) }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSPasteboardPasteboardType(_ input: NSPasteboard.PasteboardType) -> String {
+	return input.rawValue
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
+	return input.rawValue
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSPasteboardReadingOptionKeyDictionary(_ input: [String: Any]?) -> [NSPasteboard.ReadingOptionKey: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSPasteboard.ReadingOptionKey(rawValue: key), value)})
 }

@@ -22,16 +22,16 @@ class NerdTabViewController : NSViewController {
     
     
     func selectTabAtIndex(_ index: Int) {
-        assert(index >= 0 && index < childViewControllers.count, "index out of range")
+        assert(index >= 0 && index < children.count, "index out of range")
         for (i, button) in buttons.enumerated() {
-            button.state = (index == i) ? NSOnState : NSOffState
+            button.state = (index == i) ? NSControl.StateValue.on : NSControl.StateValue.off
         }
-        let viewController = childViewControllers[index]
+        let viewController = children[index]
         box.contentView = viewController.view
     }
     
     
-    func selectTab(_ sender: NSButton) {
+    @objc func selectTab(_ sender: NSButton) {
         let index = sender.tag
         selectTabAtIndex(index)
     }
@@ -48,7 +48,7 @@ class NerdTabViewController : NSViewController {
         let buttonWidth: CGFloat = 28
         let buttonHeight: CGFloat = 28
         
-        let viewControllers = childViewControllers
+        let viewControllers = children
         buttons = viewControllers.enumerated().map {
             (index, viewController) -> NSButton in
             let button = NSButton()
@@ -117,24 +117,24 @@ class NerdTabViewController : NSViewController {
             addVisualFormatConstraints("H:|[box(>=100)]|")
             addVisualFormatConstraints("V:|[stack(buttonHeight)][separator(==1)][box(>=100)]|")
             
-            if childViewControllers.count > 0 {
+            if children.count > 0 {
                 selectTabAtIndex(0)
             }
         
     }
     
     
-    override func insertChildViewController(_ childViewController: NSViewController,
+    override func insertChild(_ childViewController: NSViewController,
                                                   at index: Int) {
-        super.insertChildViewController(childViewController, at: index)
+        super.insertChild(childViewController, at: index)
         if isViewLoaded {
         reset()
         }
     }
     
     
-    override func removeChildViewController(at index: Int) {
-        super.removeChildViewController(at: index)
+    override func removeChild(at index: Int) {
+        super.removeChild(at: index)
         if isViewLoaded {
         reset()
         }

@@ -44,7 +44,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         //Create the constraints between the controls:
         let horizontalConstraints =
         NSLayoutConstraint.constraints(withVisualFormat: "|-[label]-[textField(>=100)]-|",
-            options:.AlignAllBaseline,
+            options:.alignAllLastBaseline,
             metrics:nil,
             views: ["label" : label, "textField" : textField])
         NSLayoutConstraint.activate(horizontalConstraints)

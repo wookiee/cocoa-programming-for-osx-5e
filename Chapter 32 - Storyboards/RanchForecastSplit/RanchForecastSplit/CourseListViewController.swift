@@ -19,7 +19,7 @@ class CourseListViewController: NSViewController {
     
     weak var delegate: CourseListViewControllerDelegate? = nil
     
-    dynamic var courses: [Course] = []
+    @objc dynamic var courses: [Course] = []
     
     let fetcher = ScheduleFetcher()
     

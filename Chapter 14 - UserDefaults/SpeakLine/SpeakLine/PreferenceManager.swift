@@ -19,7 +19,7 @@ class PreferenceManager {
     
     
     func registerDefaultPreferences() {
-        let defaults = [ activeVoiceKey : NSSpeechSynthesizer.defaultVoice() , activeTextKey  : "Able was I ere I saw Elba." ]
+        let defaults = [ activeVoiceKey : NSSpeechSynthesizer.defaultVoice , activeTextKey  : "Able was I ere I saw Elba." ] as [String : Any]
         userDefaults.register(defaults: defaults)
     }
     

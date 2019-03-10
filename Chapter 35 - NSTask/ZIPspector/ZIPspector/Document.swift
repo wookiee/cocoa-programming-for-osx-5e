@@ -27,7 +27,7 @@ class Document: NSDocument, NSTableViewDataSource {
     }
 
     
-    override class func autosavesInPlace() -> Bool {
+    override class var autosavesInPlace: Bool {
         return true
     }
 
@@ -78,8 +78,7 @@ class Document: NSDocument, NSTableViewDataSource {
         
         // Break the string into lines
         filenames = string.components(separatedBy: "\n")
-        print("filenames = \(filenames)")
-        
+        Swift.print("filenames = \(filenames)")
         // In case of revert
         tableView?.reloadData()
     }
@@ -94,7 +93,7 @@ class Document: NSDocument, NSTableViewDataSource {
     
     
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
-        return filenames[row]
+        return "\(filenames[row])"
     }
 
 

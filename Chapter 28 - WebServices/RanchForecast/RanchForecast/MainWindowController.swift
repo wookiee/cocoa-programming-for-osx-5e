@@ -14,7 +14,7 @@ class MainWindowController: NSWindowController {
     @IBOutlet var arrayController: NSArrayController!
     
     let fetcher = ScheduleFetcher()
-    dynamic var courses: [Course] = []
+    @objc dynamic var courses: [Course] = []
     
     
     override var windowNibName: String! {
@@ -42,9 +42,9 @@ class MainWindowController: NSWindowController {
     }
     
     
-    func openClass(_ sender: AnyObject!) {
+    @objc func openClass(_ sender: AnyObject!) {
         if let course = arrayController.selectedObjects.first as? Course {
-            NSWorkspace.shared().open(course.url as URL)
+            NSWorkspace.shared.open(course.url as URL)
         }
     }
     

@@ -16,6 +16,21 @@ class TiledImageView: NSView {
     let rowCount = 5
     
     // MARK: - Drawing
+
+    override init(frame frameRect: NSRect) {
+        super.init(frame: frameRect)
+        translatesAutoresizingMaskIntoConstraints = false
+    }
+
+    required init?(coder decoder: NSCoder) {
+        super.init(coder: decoder)
+        translatesAutoresizingMaskIntoConstraints = false
+    }
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        translatesAutoresizingMaskIntoConstraints = false
+    }
     
     func frameForImageAtLogicalX(_ logicalX: Int, y logicalY: Int) -> CGRect {
         let spacing = 10

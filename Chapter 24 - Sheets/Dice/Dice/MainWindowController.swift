@@ -32,7 +32,7 @@ class MainWindowController: NSWindowController {
             
             window.beginSheet(windowController.window!, completionHandler: { response in
                 
-                if response == NSModalResponseOK {
+                if response == NSApplication.ModalResponse.OK {
                     let configuration = self.configurationWindowController!.configuration
                     
                     dieView.color = configuration.color

@@ -14,8 +14,8 @@ class ViewController: NSViewController {
     var text: String? {
         didSet {
             let font = NSFont.systemFont(ofSize: textLayer.fontSize)
-            let attributes = [NSFontAttributeName : font]
-            var size = text?.size(withAttributes: attributes) ?? CGSize.zero
+            let attributes = [convertFromNSAttributedStringKey(NSAttributedString.Key.font) : font]
+            var size = text?.size(withAttributes: convertToOptionalNSAttributedStringKeyDictionary(attributes)) ?? CGSize.zero
             // Ensure that the size is in whole numbers:
             size.width = ceil(size.width)
             size.height = ceil(size.height)
@@ -141,7 +141,7 @@ class ViewController: NSViewController {
             CGPoint(x: CGFloat(arc4random_uniform(UInt32(superlayerBounds.maxX))),
                     y: CGFloat(arc4random_uniform(UInt32(superlayerBounds.maxY))))
             
-        let timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        let timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
             
         let positionAnimation = CABasicAnimation()
         positionAnimation.fromValue = NSValue(point: center)
@@ -168,3 +168,14 @@ class ViewController: NSViewController {
     
 }
 
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
+	return input.rawValue
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
+}

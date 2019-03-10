@@ -14,8 +14,8 @@ private let ChatWindowControllerMessageKey = "com.bignerdranch.chatter.ChatWindo
 
 class ChatWindowController: NSWindowController {
     
-    dynamic var log: NSAttributedString = NSAttributedString(string: "")
-    dynamic var message: String?
+    @objc dynamic var log: NSAttributedString = NSAttributedString(string: "")
+    @objc dynamic var message: String?
     
     // NSTextView does not support weak references.
     @IBOutlet var textView: NSTextView!
@@ -59,7 +59,7 @@ class ChatWindowController: NSWindowController {
     
     // MARK: - Notifications
     // ChatWindowControllerDidSendMessageNotification
-    func receiveDidSendMessageNotification(_ note: Notification) {
+    @objc func receiveDidSendMessageNotification(_ note: Notification) {
         let mutableLog = log.mutableCopy() as! NSMutableAttributedString
                                         
         if log.length > 0 {

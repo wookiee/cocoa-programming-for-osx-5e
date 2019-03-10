@@ -17,14 +17,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         let flowViewController = ImageViewController()
         flowViewController.title = "Flow"
-        flowViewController.image = NSImage(named: NSImageNameFlowViewTemplate)
+        flowViewController.image = NSImage(named: NSImage.flowViewTemplateName)
         let columnViewController = ImageViewController()
         columnViewController.title = "Column"
-        columnViewController.image = NSImage(named: NSImageNameColumnViewTemplate)
+        columnViewController.image = NSImage(named: NSImage.columnViewTemplateName)
         
         let tabViewController = NerdTabViewController()
-        tabViewController.addChildViewController(flowViewController)
-        tabViewController.addChildViewController(columnViewController)
+        tabViewController.addChild(flowViewController)
+        tabViewController.addChild(columnViewController)
         
         let window = NSWindow(contentViewController: tabViewController)
         window.makeKeyAndOrderFront(self)

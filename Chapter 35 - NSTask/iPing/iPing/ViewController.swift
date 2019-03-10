@@ -70,7 +70,7 @@ class ViewController: NSViewController {
     }
     
     
-    func receiveDataReadyNotification(_ notification: Notification) {
+    @objc func receiveDataReadyNotification(_ notification: Notification) {
         let data = notification.userInfo![NSFileHandleNotificationDataItem] as! Data
         let length = data.count
                 
@@ -86,15 +86,20 @@ class ViewController: NSViewController {
     }
     
     
-    func receiveTaskTerminatedNotification(_ notification: Notification) {
+    @objc func receiveTaskTerminatedNotification(_ notification: Notification) {
         print("task terminated")
                 
         task = nil
         pipe = nil
         fileHandle = nil
                 
-        startButton.state = 0
+        startButton.state = convertToNSControlStateValue(0)
     }
 
 }
 
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToNSControlStateValue(_ input: Int) -> NSControl.StateValue {
+	return NSControl.StateValue(rawValue: input)
+}
