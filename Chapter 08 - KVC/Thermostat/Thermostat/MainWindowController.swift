@@ -27,17 +27,17 @@ class MainWindowController: NSWindowController {
     }
     dynamic var isOn = true
     
-    @IBAction func makeWarmer(sender: NSButton) {
-        willChangeValueForKey("temperature")
-        temperature++
-        didChangeValueForKey("temperature")
+    @IBAction func makeWarmer(_ sender: NSButton) {
+        willChangeValue(forKey: "temperature")
+        temperature += 1
+        didChangeValue(forKey: "temperature")
     }
     
-    @IBAction func makeCooler(sender: NSButton) {
-        temperature--
+    @IBAction func makeCooler(_ sender: NSButton) {
+        temperature -= 1
     }
     
-    @IBAction func updateSwitch(sender: NSButton) {
+    @IBAction func updateSwitch(_ sender: NSButton) {
         if isOn {
             isOn = false
         } else {

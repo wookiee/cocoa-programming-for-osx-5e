@@ -11,7 +11,7 @@ import Foundation
 private let characters = Array(("0123456789abcdefghijklmnopqrstuvwxyz" +
                                "ABCDEFGHIJKLMNOPQRSTUVWXYZ").characters)
 
-func generateRandomString(length: Int) -> String {
+func generateRandomString(_ length: Int) -> String {
     // Start with an empty string
     var string = ""
     

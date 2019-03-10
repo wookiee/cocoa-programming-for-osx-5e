@@ -41,7 +41,7 @@ class ScheduleFetcherTests: XCTestCase {
         error: nil)
         
         switch result {
-        case .Success(let courses):
+        case .success(let courses):
             XCTAssert(courses.count == 1)
             let theCourse = courses[0]
             XCTAssertEqual(theCourse.title, Constants.title)

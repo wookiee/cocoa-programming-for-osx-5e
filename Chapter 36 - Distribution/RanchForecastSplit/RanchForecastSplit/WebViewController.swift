@@ -23,8 +23,8 @@ class WebViewController: NSViewController {
     }
     
     
-    func loadURL(url: NSURL) {
-        let request = NSURLRequest(URL: url)
-        webView.loadRequest(request)
+    func loadURL(_ url: URL) {
+        let request = URLRequest(url: url)
+        webView.load(request)
     }
 }

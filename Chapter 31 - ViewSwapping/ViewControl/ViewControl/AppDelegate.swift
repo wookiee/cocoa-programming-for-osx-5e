@@ -14,7 +14,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var window: NSWindow?
 
 
-    func applicationDidFinishLaunching(aNotification: NSNotification) {
+    func applicationDidFinishLaunching(_ aNotification: Notification) {
         let flowViewController = ImageViewController()
         flowViewController.title = "Flow"
         flowViewController.image = NSImage(named: NSImageNameFlowViewTemplate)
@@ -31,7 +31,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.window = window
     }
 
-    func applicationWillTerminate(aNotification: NSNotification) {
+    func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
     }
 

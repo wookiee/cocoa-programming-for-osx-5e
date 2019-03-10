@@ -10,9 +10,9 @@ import Cocoa
 
 class CarArrayController: NSArrayController {
     
-    override func newObject() -> AnyObject {
+    override func newObject() -> Any {
         let newObj = super.newObject() as! NSObject
-        let now = NSDate()
+        let now = Date()
         newObj.setValue(now, forKey: "datePurchased")
         return newObj
     }

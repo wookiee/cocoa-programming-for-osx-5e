@@ -50,14 +50,14 @@ let floatFromDouble = Float(easyPi)
 let floatingPi: Float = 3.14
 
 
-var reading1: Float? = 9.8
-var reading2: Float? = 9.2
-var reading3: Float? = 9.7
+let reading1: Float? = 9.8
+let reading2: Float? = 9.2
+let reading3: Float? = 9.7
 
 if let r1 = reading1,
     let r2 = reading2,
     let r3 = reading3 {
-        let avgReading = (r1 + r2 + r3) / 3
+    let avgReading = (r1 + r2 + r3) / 3
 } else {
     let errorString = "Instrument reported a reading that was nil."
 }
@@ -72,7 +72,7 @@ else {
     // do something else
 }
 
-for var i = 0; i < countingUp.count; i++ {
+for i in 0 ..< countingUp.count {
     let string = countingUp[i]
 }
 
@@ -85,7 +85,7 @@ for string in countingUp {
     
 }
 
-for (i, string) in countingUp.enumerate() {
+for (i, string) in countingUp.enumerated() {
     
 }
 
@@ -98,33 +98,32 @@ for (space, name) in nameByParkingSpace {
 
 
 enum PieType {
-    case Apple
-    case Cherry
-    case Pecan
+    case apple
+    case cherry
+    case pecan
 }
-let favoritePie = PieType.Apple
+let favoritePie = PieType.apple
 
 var piesToBake: [PieType] = []
-piesToBake.append(.Apple)
+piesToBake.append(.apple)
 
 let name: String
 switch favoritePie {
-case .Apple:
+case .apple:
     name = "Apple"
-case .Cherry:
+case .cherry:
     name = "Cherry"
-case .Pecan:
+case .pecan:
     name = "Pecan"
 }
 
 
 enum PieTypeInt: Int {
-    case Apple = 0
-    case Cherry = 1
-    case Pecan = 2
+    case apple = 0
+    case cherry = 1
+    case pecan = 2
 }
-let pieRawValue = PieTypeInt.Pecan.rawValue
+let pieRawValue = PieTypeInt.pecan.rawValue
 if let pie = PieTypeInt(rawValue: pieRawValue) {
     
 }
-

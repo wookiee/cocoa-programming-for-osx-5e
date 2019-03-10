@@ -33,17 +33,17 @@ class MainWindowController: NSWindowController {
         adjustColor()
     }
     
-    @IBAction func adjustRed(sender: NSSlider) {
+    @IBAction func adjustRed(_ sender: NSSlider) {
         r = sender.floatValue
         adjustColor()
     }
     
-    @IBAction func adjustGreen(sender: NSSlider) {
+    @IBAction func adjustGreen(_ sender: NSSlider) {
         g = sender.floatValue
         adjustColor()
     }
     
-    @IBAction func adjustBlue(sender: NSSlider) {
+    @IBAction func adjustBlue(_ sender: NSSlider) {
         b = sender.floatValue
         adjustColor()
     }

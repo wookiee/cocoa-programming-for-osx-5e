@@ -11,39 +11,39 @@ import Foundation
 class ScheduleFetcher {
     
     enum FetchCoursesResult {
-        case Success([Course])
-        case Failure(NSError)
+        case success([Course])
+        case failure(NSError)
         
         init(throwingClosure: () throws -> [Course]) {
             do {
                 let courses = try throwingClosure()
-                self = .Success(courses)
+                self = .success(courses)
             }
             catch {
-                self = .Failure(error as NSError)
+                self = .failure(error as NSError)
             }
         }
     }
     
-    let session: NSURLSession
+    let session: URLSession
     
     
     init() {
-        let config = NSURLSessionConfiguration.defaultSessionConfiguration()
-        session = NSURLSession(configuration: config)
+        let config = URLSessionConfiguration.default
+        session = URLSession(configuration: config)
     }
     
     
-    func fetchCoursesUsingCompletionHandler(completionHandler: FetchCoursesResult -> Void) {
-        let url = NSURL(string: "http://bookapi.bignerdranch.com/courses.json")!
-        let request = NSURLRequest(URL: url)
+    func fetchCoursesUsingCompletionHandler(_ completionHandler: @escaping (FetchCoursesResult) -> Void) {
+        let url = URL(string: "http://bookapi.bignerdranch.com/courses.json")!
+        let request = URLRequest(url: url)
         
-        let task = session.dataTaskWithRequest(request) { data, response, error in
+        let task = session.dataTask(with: request, completionHandler: { data, response, error in
             let result: FetchCoursesResult
             
             if let data = data {
-                if let response = response as? NSHTTPURLResponse {
-                    print("\(data.length) bytes, HTTP \(response.statusCode).")
+                if let response = response as? HTTPURLResponse {
+                    print("\(data.count) bytes, HTTP \(response.statusCode).")
                     if response.statusCode == 200 {
                         result = FetchCoursesResult { try self.coursesFromData(data) }
                     }
@@ -51,54 +51,54 @@ class ScheduleFetcher {
                         let error =
                         self.errorWithCode(2, localizedDescription:
                                               "Bad status code \(response.statusCode)")
-                        result = .Failure(error)
+                        result = .failure(error)
                     }
                 }
                 else {
                     let error =
                     self.errorWithCode(1, localizedDescription:
                                           "Unexpected response object.")
-                    result = .Failure(error)
+                    result = .failure(error)
                 }
             }
             else {
-                result = .Failure(error!)
+                result = .failure(error! as NSError)
             }
         
-            NSOperationQueue.mainQueue().addOperationWithBlock {
+            OperationQueue.main.addOperation {
                 completionHandler(result)
             }
-        }
+        }) 
         task.resume()
     }
     
     
-    func errorWithCode(code: Int, localizedDescription: String) -> NSError {
+    func errorWithCode(_ code: Int, localizedDescription: String) -> NSError {
             return NSError(domain: "ScheduleFetcher",
                              code: code,
                          userInfo: [NSLocalizedDescriptionKey: localizedDescription])
     }
     
     
-    func courseFromDictionary(courseDict: NSDictionary) -> Course? {
+    func courseFromDictionary(_ courseDict: NSDictionary) -> Course? {
         let title = courseDict["title"] as! String
         let urlString = courseDict["url"] as! String
         let upcomingArray = courseDict["upcoming"] as! [NSDictionary]
         let nextUpcomingDict = upcomingArray.first!
         let nextStartDateString = nextUpcomingDict["start_date"] as! String
         
-        let url = NSURL(string: urlString)!
+        let url = URL(string: urlString)!
         
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        let nextStartDate = dateFormatter.dateFromString(nextStartDateString)!
+        let nextStartDate = dateFormatter.date(from: nextStartDateString)!
         
         return Course(title: title, url: url, nextStartDate: nextStartDate)
     }
     
     
-    func coursesFromData(data: NSData) throws -> [Course] {
-        let topLevelDict = try NSJSONSerialization.JSONObjectWithData(data,
+    func coursesFromData(_ data: Data) throws -> [Course] {
+        let topLevelDict = try JSONSerialization.jsonObject(with: data,
                                                              options: [])
                                as! NSDictionary
         

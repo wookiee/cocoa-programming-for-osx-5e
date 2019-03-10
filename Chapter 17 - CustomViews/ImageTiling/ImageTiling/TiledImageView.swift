@@ -17,7 +17,7 @@ class TiledImageView: NSView {
     
     // MARK: - Drawing
     
-    func frameForImageAtLogicalX(logicalX: Int, y logicalY: Int) -> CGRect {
+    func frameForImageAtLogicalX(_ logicalX: Int, y logicalY: Int) -> CGRect {
         let spacing = 10
         let width = 100
         let height = 100
@@ -26,12 +26,12 @@ class TiledImageView: NSView {
         return CGRect(x: x, y: y, width: width, height: height)
     }
 
-    override func drawRect(dirtyRect: NSRect) {
+    override func draw(_ dirtyRect: NSRect) {
         if let image = image {
             for x in 0..<columnCount {
                 for y in 0..<rowCount {
                     let frame = frameForImageAtLogicalX(x, y: y)
-                    image.drawInRect(frame)
+                    image.draw(in: frame)
                 }
             }
         }

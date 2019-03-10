@@ -162,9 +162,11 @@
 				TargetAttributes = {
 					AE1840031A519F3F005226E6 = {
 						CreatedOnToolsVersion = 6.2;
+						LastSwiftMigration = 0830;
 					};
 					AE1840131A519F3F005226E6 = {
 						CreatedOnToolsVersion = 6.2;
+						LastSwiftMigration = 0830;
 						TestTargetID = AE1840031A519F3F005226E6;
 					};
 				};
@@ -333,6 +335,7 @@
 				INFOPLIST_FILE = RGBWell/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -344,6 +347,7 @@
 				INFOPLIST_FILE = RGBWell/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -363,6 +367,7 @@
 				INFOPLIST_FILE = RGBWellTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RGBWell.app/Contents/MacOS/RGBWell";
 			};
 			name = Debug;
@@ -379,6 +384,7 @@
 				INFOPLIST_FILE = RGBWellTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RGBWell.app/Contents/MacOS/RGBWell";
 			};
 			name = Release;

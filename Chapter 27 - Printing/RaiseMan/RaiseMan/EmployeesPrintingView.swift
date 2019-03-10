@@ -8,7 +8,7 @@
 
 import Cocoa
 
-private let font: NSFont = NSFont.userFixedPitchFontOfSize(12.0)!
+private let font: NSFont = NSFont.userFixedPitchFont(ofSize: 12.0)!
 private let textAttributes: [String: AnyObject] = [NSFontAttributeName : font]
 private let lineHeight: CGFloat = font.capHeight * 2.0
 
@@ -33,8 +33,8 @@ class EmployeesPrintingView: NSView {
     
     // MARK: - Pagination
     
-    override func knowsPageRange(range: NSRangePointer) -> Bool {
-        let printOperation = NSPrintOperation.currentOperation()!
+    override func knowsPageRange(_ range: NSRangePointer) -> Bool {
+        let printOperation = NSPrintOperation.current()!
         let printInfo: NSPrintInfo = printOperation.printInfo
         
         // Where can I draw?
@@ -58,12 +58,12 @@ class EmployeesPrintingView: NSView {
         }
         
         // Return the newly constructed range, rangeOut, via the range pointer
-        range.memory = rangeOut
+        range.pointee = rangeOut
         
         return true
     }
     
-    override func rectForPage(page: Int) -> NSRect {
+    override func rectForPage(_ page: Int) -> NSRect {
         // Note the current page
         // Although Cocoa uses 1=based indexing for the page number
         //  it's easier not to do that here.
@@ -76,11 +76,11 @@ class EmployeesPrintingView: NSView {
     // MARK: - Drawing
     
     // The origin of the view is at the upper left corner
-    override var flipped: Bool {
+    override var isFlipped: Bool {
         return true
     }
     
-    override func drawRect(dirtyRect: NSRect) {
+    override func draw(_ dirtyRect: NSRect) {
         var nameRect = NSRect(x: pageRect.minX,
                               y: 0,
                           width: 200.0,
@@ -102,12 +102,12 @@ class EmployeesPrintingView: NSView {
             nameRect.origin.y = pageRect.minY + CGFloat(indexOnPage) * lineHeight
             let employeeName = (employee.name ?? "")
             let indexAndName = "\(indexInEmployees) \(employeeName)"
-            indexAndName.drawInRect(nameRect, withAttributes: textAttributes)
+            indexAndName.draw(in: nameRect, withAttributes: textAttributes)
             // Draw raise
             raiseRect.origin.y = nameRect.minY
             let raise = String(format: "%4.1f%%", employee.raise * 100)
             let raiseString = raise
-            raiseString.drawInRect(raiseRect, withAttributes: textAttributes)
+            raiseString.draw(in: raiseRect, withAttributes: textAttributes)
         }
     }
 }

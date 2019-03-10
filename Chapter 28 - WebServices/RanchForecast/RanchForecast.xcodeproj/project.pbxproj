@@ -167,9 +167,11 @@
 				TargetAttributes = {
 					7D05272E1A9257C100C9A5E1 = {
 						CreatedOnToolsVersion = 6.3;
+						LastSwiftMigration = 0830;
 					};
 					7D05273E1A9257C200C9A5E1 = {
 						CreatedOnToolsVersion = 6.3;
+						LastSwiftMigration = 0830;
 						TestTargetID = 7D05272E1A9257C100C9A5E1;
 					};
 				};
@@ -341,6 +343,7 @@
 				INFOPLIST_FILE = RanchForecast/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -352,6 +355,7 @@
 				INFOPLIST_FILE = RanchForecast/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -371,6 +375,7 @@
 				INFOPLIST_FILE = RanchForecastTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RanchForecast.app/Contents/MacOS/RanchForecast";
 			};
 			name = Debug;
@@ -387,6 +392,7 @@
 				INFOPLIST_FILE = RanchForecastTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RanchForecast.app/Contents/MacOS/RanchForecast";
 			};
 			name = Release;
@@ -410,6 +416,7 @@
 				7D05274B1A9257C200C9A5E1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7D05274C1A9257C200C9A5E1 /* Build configuration list for PBXNativeTarget "RanchForecastTests" */ = {
 			isa = XCConfigurationList;
@@ -418,6 +425,7 @@
 				7D05274E1A9257C200C9A5E1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

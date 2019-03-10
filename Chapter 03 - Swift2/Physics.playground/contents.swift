@@ -12,11 +12,11 @@ struct Vector: CustomStringConvertible {
         self.y = y
     }
     
-    func vectorByAddingVector(vector: Vector) -> Vector {
+    func vectorByAddingVector(_ vector: Vector) -> Vector {
         return Vector(x: x + vector.x,
-            y: y + vector.y)
+                      y: y + vector.y)
     }
-
+    
     var magnitude: Double {
         return sqrt(x*x + y*y)
     }
@@ -52,8 +52,8 @@ class Particle {
     convenience init() {
         self.init(position: Vector())
     }
-
-    func tick(dt: NSTimeInterval) {
+    
+    func tick(_ dt: TimeInterval) {
         velocity = velocity + acceleration * dt
         position = position + velocity * dt
         position.y = max(0, position.y)
@@ -62,20 +62,20 @@ class Particle {
 
 class Rocket: Particle {
     let thrust: Double
-    var thrustTimeRemaining: NSTimeInterval
+    var thrustTimeRemaining: TimeInterval
     let direction = Vector(x: 0, y: 1)
     
-    convenience init(thrust: Double, thrustTime: NSTimeInterval) {
+    convenience init(thrust: Double, thrustTime: TimeInterval) {
         self.init(position: Vector(), thrust: thrust, thrustTime: thrustTime)
     }
     
-    init(position: Vector, thrust: Double, thrustTime: NSTimeInterval) {
+    init(position: Vector, thrust: Double, thrustTime: TimeInterval) {
         self.thrust = thrust
         self.thrustTimeRemaining = thrustTime
         super.init(position: position)
     }
     
-    override func tick(dt: NSTimeInterval) {
+    override func tick(_ dt: TimeInterval) {
         if thrustTimeRemaining > 0.0 {
             let thrustTime = min(dt, thrustTimeRemaining)
             let thrustToApply = thrust * thrustTime
@@ -93,18 +93,18 @@ let twoGsAlso = gravity * 2
 
 class Simulation {
     var particles: [Particle] = []
-    var time: NSTimeInterval = 0.0
-
-    func addParticle(particle: Particle) {
+    var time: TimeInterval = 0.0
+    
+    func addParticle(_ particle: Particle) {
         particles.append(particle)
     }
     
-    func tick(dt: NSTimeInterval) {
+    func tick(_ dt: TimeInterval) {
         for particle in particles {
             particle.acceleration = particle.acceleration + gravity
             particle.tick(dt)
             particle.acceleration = Vector()
-            particle.position.y
+            //            particle.position.y
         }
         time += dt
         particles = particles.filter { particle in
