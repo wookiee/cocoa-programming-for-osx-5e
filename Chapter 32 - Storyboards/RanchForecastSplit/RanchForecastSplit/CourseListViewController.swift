@@ -10,7 +10,7 @@ import Cocoa
 
 
 protocol CourseListViewControllerDelegate: class {
-    func courseListViewController(viewController: CourseListViewController,
+    func courseListViewController(_ viewController: CourseListViewController,
                                   selectedCourse: Course?) -> Void
 }
 
@@ -19,7 +19,7 @@ class CourseListViewController: NSViewController {
     
     weak var delegate: CourseListViewControllerDelegate? = nil
     
-    dynamic var courses: [Course] = []
+    @objc dynamic var courses: [Course] = []
     
     let fetcher = ScheduleFetcher()
     
@@ -30,10 +30,10 @@ class CourseListViewController: NSViewController {
         
         fetcher.fetchCoursesUsingCompletionHandler { (result) in
             switch result {
-                case .Success(let courses):
+                case .success(let courses):
                     print("Got courses: \(courses)")
                     self.courses = courses
-                case .Failure(let error):
+                case .failure(let error):
                     print("Got error: \(error)")
                     NSAlert(error: error).runModal()
                     self.courses = []
@@ -42,7 +42,7 @@ class CourseListViewController: NSViewController {
     }
     
     
-    @IBAction func selectCourse(sender: AnyObject) {
+    @IBAction func selectCourse(_ sender: AnyObject) {
         let selectedCourse = arrayController.selectedObjects.first as! Course?
         delegate?.courseListViewController(self, selectedCourse: selectedCourse)
     }

@@ -27,7 +27,7 @@ class ScheduleFetcherTests: XCTestCase {
     
     
     func testCreateCourseFromValidDictionary() {
-            let course: Course! = fetcher.courseFromDictionary(Constants.validCourseDict)
+        let course: Course! = fetcher.courseFromDictionary(Constants.validCourseDict as NSDictionary)
             XCTAssertNotNil(course)
             XCTAssertEqual(course.title, Constants.title)
             XCTAssertEqual(course.url, Constants.url)
@@ -41,7 +41,7 @@ class ScheduleFetcherTests: XCTestCase {
         error: nil)
         
         switch result {
-        case .Success(let courses):
+        case .success(let courses):
             XCTAssert(courses.count == 1)
             let theCourse = courses[0]
             XCTAssertEqual(theCourse.title, Constants.title)

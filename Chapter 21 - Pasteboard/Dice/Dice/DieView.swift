@@ -30,15 +30,15 @@ class DieView: NSView {
 		return NSSize(width: 20, height: 20)
 	}
 
-	override func drawRect(dirtyRect: NSRect) {
-		let backgroundColor = NSColor.lightGrayColor()
+	override func draw(_ dirtyRect: NSRect) {
+		let backgroundColor = NSColor.lightGray
 		backgroundColor.set()
-		NSBezierPath.fillRect(bounds)
+		NSBezierPath.fill(bounds)
 		
 		drawDieWithSize(bounds.size)
 	}
 	
-	func metricsForSize(size: CGSize) -> (edgeLength: CGFloat, dieFrame: CGRect) {
+	func metricsForSize(_ size: CGSize) -> (edgeLength: CGFloat, dieFrame: CGRect) {
 		let edgeLength = min(size.width, size.height)
 		let padding = edgeLength/10.0
 		let drawingBounds = CGRect(x: 0, y: 0, width: edgeLength, height: edgeLength)
@@ -49,7 +49,7 @@ class DieView: NSView {
 		return (edgeLength, dieFrame)
 	}
 	
-	func drawDieWithSize(size: CGSize) {
+	func drawDieWithSize(_ size: CGSize) {
 		if let intValue = intValue {
 			let (edgeLength, dieFrame) = metricsForSize(size)
 			let cornerRadius:CGFloat = edgeLength/5.0
@@ -63,31 +63,31 @@ class DieView: NSView {
 			shadow.shadowBlurRadius = (pressed ? edgeLength/100 : edgeLength/20)
 			shadow.set()
 			
-			NSColor.whiteColor().set()
+			NSColor.white.set()
 			NSBezierPath(roundedRect: dieFrame, xRadius: cornerRadius, yRadius: cornerRadius).fill()
 			
 			NSGraphicsContext.restoreGraphicsState()
 			
-			NSColor.blackColor().set()
+			NSColor.black.set()
 			
-			func drawDot(u: CGFloat, _ v: CGFloat) {
+			func drawDot(_ u: CGFloat, _ v: CGFloat) {
 				let dotOrigin = CGPoint(x: dotFrame.minX + dotFrame.width * u,
 										y: dotFrame.minY + dotFrame.height * v)
-				let dotRect = CGRect(origin: dotOrigin, size: CGSizeZero)
+				let dotRect = CGRect(origin: dotOrigin, size: CGSize.zero)
 					.insetBy(dx: -dotRadius, dy: -dotRadius)
-				NSBezierPath(ovalInRect: dotRect).fill()
+				NSBezierPath(ovalIn: dotRect).fill()
 			}
 			
-			if (1...6).indexOf(intValue) != nil {
+			if (1...6).firstIndex(of: intValue) != nil {
 				// Draw Dots
-				if [1, 3, 5].indexOf(intValue) != nil {
+				if [1, 3, 5].firstIndex(of: intValue) != nil {
 					drawDot(0.5, 0.5) // center dot
 				}
-				if (2...6).indexOf(intValue) != nil {
+				if (2...6).firstIndex(of: intValue) != nil {
 					drawDot(0, 1) // upper left
 					drawDot(1, 0) // lower right
 				}
-				if (4...6).indexOf(intValue) != nil {
+				if (4...6).firstIndex(of: intValue) != nil {
 					drawDot(1, 1) // upper right
 					drawDot(0, 0) // lower left
 				}
@@ -97,29 +97,29 @@ class DieView: NSView {
 				}
 			}
 			else {
-				let paraStyle = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
-				paraStyle.alignment = .Center
-				let font = NSFont.systemFontOfSize(edgeLength * 0.6)
+				let paraStyle = NSParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
+				paraStyle.alignment = .center
+				let font = NSFont.systemFont(ofSize: edgeLength * 0.6)
 				let attrs = [
-					NSForegroundColorAttributeName: NSColor.blackColor(),
-							   NSFontAttributeName: font,
-					 NSParagraphStyleAttributeName: paraStyle ]
+					convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor): NSColor.black,
+							   convertFromNSAttributedStringKey(NSAttributedString.Key.font): font,
+					 convertFromNSAttributedStringKey(NSAttributedString.Key.paragraphStyle): paraStyle ]
 				let string = "\(intValue)" as NSString
 				string.drawCenteredInRect(dieFrame, attributes: attrs)
 			}
 		}
 	}
 	
-	@IBAction func savePDF(sender: AnyObject!) {
+	@IBAction func savePDF(_ sender: AnyObject!) {
 		let savePanel = NSSavePanel()
 		savePanel.allowedFileTypes = ["pdf"]
-        savePanel.beginSheetModalForWindow(window!) {
+        savePanel.beginSheetModal(for: window!) {
             [unowned savePanel] (result) in
-            if result == NSModalResponseOK {
-                let data = self.dataWithPDFInsideRect(self.bounds)
+            if result == NSApplication.ModalResponse.OK {
+                let data = self.dataWithPDF(inside: self.bounds)
                 do {
-                    try data.writeToURL(savePanel.URL!,
-                        options: NSDataWritingOptions.DataWritingAtomic)
+                    try data.write(to: savePanel.url!,
+                        options: NSData.WritingOptions.atomic)
                 } catch let error as NSError {
                     let alert = NSAlert(error: error)
                     alert.runModal()
@@ -132,16 +132,16 @@ class DieView: NSView {
 
 	// MARK: - Mouse Events
 	
-	override func mouseDown(theEvent: NSEvent) {
+	override func mouseDown(with theEvent: NSEvent) {
 		Swift.print("mouseDown")
 		let dieFrame = metricsForSize(bounds.size).dieFrame
-		let pointInView = convertPoint(theEvent.locationInWindow, fromView: nil)
+		let pointInView = convert(theEvent.locationInWindow, from: nil)
 		pressed = dieFrame.contains(pointInView)
 	}
-	override func mouseDragged(theEvent: NSEvent) {
+	override func mouseDragged(with theEvent: NSEvent) {
 		Swift.print("mouseDragged location: \(theEvent.locationInWindow)")
 	}
-	override func mouseUp(theEvent: NSEvent) {
+	override func mouseUp(with theEvent: NSEvent) {
 		Swift.print("mouseUp clickCount: \(theEvent.clickCount)")
 		if theEvent.clickCount == 2 && pressed {
 			randomize()
@@ -164,7 +164,7 @@ class DieView: NSView {
 	override func drawFocusRingMask() {
 		// Try this:
 		//drawDieWithSize(bounds.size)
-		NSBezierPath.fillRect(bounds)
+		NSBezierPath.fill(bounds)
 	}
 	override var focusRingMaskBounds: NSRect {
 		return bounds
@@ -172,35 +172,35 @@ class DieView: NSView {
 	
 	// MARK: Keyboard Events
 	
-	override func keyDown(theEvent: NSEvent) {
+	override func keyDown(with theEvent: NSEvent) {
 		interpretKeyEvents([theEvent])
 	}
 	
-	override func insertText(insertString: AnyObject) {
+	override func insertText(_ insertString: Any) {
 		let text = insertString as! String
 		if let number = Int(text) {
 			intValue = number
 		}
 	}
 
-	override func insertTab(sender: AnyObject?) {
+	override func insertTab(_ sender: Any?) {
 		window?.selectNextKeyView(sender)
 	}
-	override func insertBacktab(sender: AnyObject?) {
+	override func insertBacktab(_ sender: Any?) {
 		window?.selectPreviousKeyView(sender)
 	}
 
 	// MARK: - Pasteboard
 	
-	func writeToPasteboard(pasteboard: NSPasteboard) {
+	func writeToPasteboard(_ pasteboard: NSPasteboard) {
 		if let intValue = intValue {
 			pasteboard.clearContents()
-			pasteboard.writeObjects(["\(intValue)"])
+			pasteboard.writeObjects(["\(intValue)" as NSPasteboardWriting])
 		}
 	}
 	
-	func readFromPasteboard(pasteboard: NSPasteboard) -> Bool {
-		let objects = pasteboard.readObjectsForClasses([NSString.self], options: [:]) as! [String]
+	func readFromPasteboard(_ pasteboard: NSPasteboard) -> Bool {
+		let objects = pasteboard.readObjects(forClasses: [NSString.self], options: convertToOptionalNSPasteboardReadingOptionKeyDictionary([:])) as! [String]
 		if let str = objects.first {
 			intValue = Int(str)
 			return true
@@ -208,15 +208,26 @@ class DieView: NSView {
 		return false
 	}
 	
-	@IBAction func cut(sender: AnyObject?) {
-		writeToPasteboard(NSPasteboard.generalPasteboard())
+	@IBAction func cut(_ sender: AnyObject?) {
+		writeToPasteboard(NSPasteboard.general)
 		intValue = nil
 	}
-	@IBAction func copy(sender: AnyObject?) {
-		writeToPasteboard(NSPasteboard.generalPasteboard())
+	@IBAction func copy(_ sender: AnyObject?) {
+		writeToPasteboard(NSPasteboard.general)
 	}
-	@IBAction func paste(sender: AnyObject?) {
-		readFromPasteboard(NSPasteboard.generalPasteboard())
+	@IBAction func paste(_ sender: AnyObject?) {
+		_ = readFromPasteboard(NSPasteboard.general)
 	}
 
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
+	return input.rawValue
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSPasteboardReadingOptionKeyDictionary(_ input: [String: Any]?) -> [NSPasteboard.ReadingOptionKey: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSPasteboard.ReadingOptionKey(rawValue: key), value)})
 }

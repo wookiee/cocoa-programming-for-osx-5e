@@ -13,11 +13,11 @@ class ViewController: NSViewController {
     @IBOutlet var outputView: NSTextView!
     @IBOutlet weak var hostField: NSTextField!
     @IBOutlet weak var startButton: NSButton!
-    var task: NSTask?
-    var pipe: NSPipe?
-    var fileHandle: NSFileHandle?
+    var task: Process?
+    var pipe: Pipe?
+    var fileHandle: FileHandle?
     
-    @IBAction func togglePinging(sender: NSButton) {
+    @IBAction func togglePinging(_ sender: NSButton) {
         // Is there a running task?
         if let task = task {
             // If there is, stop it!
@@ -26,12 +26,12 @@ class ViewController: NSViewController {
             // If there isn't, start one.
         
             // Create a new task
-            let task = NSTask()
+            let task = Process()
             task.launchPath = "/sbin/ping"
             task.arguments = ["-c10", hostField.stringValue]
         
             // Create a new pipe for standardOutput
-            let pipe = NSPipe()
+            let pipe = Pipe()
             task.standardOutput = pipe
         
             // Grab the file handle
@@ -41,15 +41,15 @@ class ViewController: NSViewController {
             self.pipe = pipe
             self.fileHandle = fileHandle
         
-            let notificationCenter = NSNotificationCenter.defaultCenter()
+            let notificationCenter = NotificationCenter.default
             notificationCenter.removeObserver(self)
             notificationCenter.addObserver(self,
-                                 selector: Selector("receiveDataReadyNotification:"),
-                                     name: NSFileHandleReadCompletionNotification,
+                                 selector: #selector(ViewController.receiveDataReadyNotification(_:)),
+                                     name: FileHandle.readCompletionNotification,
                                    object: fileHandle)
             notificationCenter.addObserver(self,
-                                 selector: Selector("receiveTaskTerminatedNotification:"),
-                                     name: NSTaskDidTerminateNotification,
+                                 selector: #selector(ViewController.receiveTaskTerminatedNotification(_:)),
+                                     name: Process.didTerminateNotification,
                                    object: task)
         
             task.launch()
@@ -62,17 +62,17 @@ class ViewController: NSViewController {
     }
     
     
-    func appendData(data: NSData) {
-        let string = String(data: data, encoding: NSUTF8StringEncoding)! as String
+    func appendData(_ data: Data) {
+        let string = String(data: data, encoding: String.Encoding.utf8)! as String
         let textStorage = outputView.textStorage!
         let endRange = NSRange(location: textStorage.length, length: 0)
-        textStorage.replaceCharactersInRange(endRange, withString: string)
+        textStorage.replaceCharacters(in: endRange, with: string)
     }
     
     
-    func receiveDataReadyNotification(notification: NSNotification) {
-        let data = notification.userInfo![NSFileHandleNotificationDataItem] as! NSData
-        let length = data.length
+    @objc func receiveDataReadyNotification(_ notification: Notification) {
+        let data = notification.userInfo![NSFileHandleNotificationDataItem] as! Data
+        let length = data.count
                 
         print("received data: \(length) bytes")
         if length > 0 {
@@ -86,15 +86,20 @@ class ViewController: NSViewController {
     }
     
     
-    func receiveTaskTerminatedNotification(notification: NSNotification) {
+    @objc func receiveTaskTerminatedNotification(_ notification: Notification) {
         print("task terminated")
                 
         task = nil
         pipe = nil
         fileHandle = nil
                 
-        startButton.state = 0
+        startButton.state = convertToNSControlStateValue(0)
     }
 
 }
 
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToNSControlStateValue(_ input: Int) -> NSControl.StateValue {
+	return NSControl.StateValue(rawValue: input)
+}

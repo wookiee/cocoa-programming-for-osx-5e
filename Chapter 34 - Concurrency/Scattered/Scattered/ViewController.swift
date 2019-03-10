@@ -13,9 +13,9 @@ class ViewController: NSViewController {
     var textLayer: CATextLayer!
     var text: String? {
         didSet {
-            let font = NSFont.systemFontOfSize(textLayer.fontSize)
-            let attributes = [NSFontAttributeName : font]
-            var size = text?.sizeWithAttributes(attributes) ?? CGSize.zero
+            let font = NSFont.systemFont(ofSize: textLayer.fontSize)
+            let attributes = [convertFromNSAttributedStringKey(NSAttributedString.Key.font) : font]
+            var size = text?.size(withAttributes: convertToOptionalNSAttributedStringKeyDictionary(attributes)) ?? CGSize.zero
             // Ensure that the size is in whole numbers:
             size.width = ceil(size.width)
             size.height = ceil(size.height)
@@ -26,50 +26,50 @@ class ViewController: NSViewController {
     }
     
     
-    let processingQueue: NSOperationQueue = {
-        let result = NSOperationQueue()
+    let processingQueue: OperationQueue = {
+        let result = OperationQueue()
         //result.maxConcurrentOperationCount = 4
         return result
     }()
     
     
-    func addImagesFromFolderURL(folderURL: NSURL) {
-        processingQueue.addOperationWithBlock {
-            let t0 = NSDate.timeIntervalSinceReferenceDate()
+    func addImagesFromFolderURL(_ folderURL: URL) {
+        processingQueue.addOperation {
+            let t0 = Date.timeIntervalSinceReferenceDate
             
-            let fileManager = NSFileManager()
-            let directoryEnumerator = fileManager.enumeratorAtURL(folderURL,
+            let fileManager = FileManager()
+            let directoryEnumerator = fileManager.enumerator(at: folderURL,
                                       includingPropertiesForKeys: nil,
                                                          options: [],
                                                     errorHandler: nil)!
             
-            while let url = directoryEnumerator.nextObject() as? NSURL {
+            while let url = directoryEnumerator.nextObject() as? URL {
                 // Skip directories:
                 
                 var isDirectoryValue: AnyObject?
                 do {
-                    try url.getResourceValue(&isDirectoryValue,
-                        forKey: NSURLIsDirectoryKey)
+                    try (url as NSURL).getResourceValue(&isDirectoryValue,
+                        forKey: URLResourceKey.isDirectoryKey)
                 } catch {
                     print("error checking whether URL is directory: \(error)")
                     continue
                 }
                 
-                self.processingQueue.addOperationWithBlock {
-                    guard let isDirectory = isDirectoryValue as? Bool where
+                self.processingQueue.addOperation {
+                    guard let isDirectory = isDirectoryValue as? Bool,
                         isDirectory == false else {
                             return
                     }
                 
-                    guard let image = NSImage(contentsOfURL: url) else {
+                    guard let image = NSImage(contentsOf: url) else {
                         return
                     }
                     
                     let thumbImage = self.thumbImageFromImage(image)
                     
-                    NSOperationQueue.mainQueue().addOperationWithBlock {
+                    OperationQueue.main.addOperation {
                         self.presentImage(thumbImage)
-                        let t1 = NSDate.timeIntervalSinceReferenceDate()
+                        let t1 = Date.timeIntervalSinceReferenceDate
                         let interval = t1 - t0
                         self.text = String(format: "%0.1fs", interval)
                     }
@@ -88,10 +88,10 @@ class ViewController: NSViewController {
         let textContainer = CALayer()
         textContainer.anchorPoint = CGPoint.zero
         
-        textContainer.position = CGPointMake(10, 10)
+        textContainer.position = CGPoint(x: 10, y: 10)
         textContainer.zPosition = 100
-        textContainer.backgroundColor = NSColor.blackColor().CGColor
-        textContainer.borderColor = NSColor.whiteColor().CGColor
+        textContainer.backgroundColor = NSColor.black.cgColor
+        textContainer.borderColor = NSColor.white.cgColor
         textContainer.borderWidth = 2
         textContainer.cornerRadius = 15
         textContainer.shadowOpacity = 0.5
@@ -99,10 +99,10 @@ class ViewController: NSViewController {
         
         let textLayer = CATextLayer()
         textLayer.anchorPoint = CGPoint.zero
-        textLayer.position = CGPointMake(10, 6)
+        textLayer.position = CGPoint(x: 10, y: 6)
         textLayer.zPosition = 100
         textLayer.fontSize = 24
-        textLayer.foregroundColor = NSColor.whiteColor().CGColor
+        textLayer.foregroundColor = NSColor.white.cgColor
         self.textLayer = textLayer
         
         textContainer.addSublayer(textLayer)
@@ -110,19 +110,19 @@ class ViewController: NSViewController {
         // Rely on text's didSet to update textLayer's bounds:
         text = "Loading..."
         
-        let url = NSURL.fileURLWithPath("/Library/Desktop Pictures", isDirectory: true)
+        let url = URL(fileURLWithPath: "/Library/Desktop Pictures", isDirectory: true)
         addImagesFromFolderURL(url)
     }
     
     
-    func thumbImageFromImage(image: NSImage) -> NSImage {
+    func thumbImageFromImage(_ image: NSImage) -> NSImage {
         let targetHeight: CGFloat = 200.0
         let imageSize = image.size
         let smallerSize = NSSize(width: targetHeight * imageSize.width / imageSize.height, height: targetHeight)
         
         let smallerImage = NSImage(size: smallerSize,
                                    flipped: false) { (rect) -> Bool in
-                                        image.drawInRect(rect)
+                                        image.draw(in: rect)
                                         return true
         }
         
@@ -130,7 +130,7 @@ class ViewController: NSViewController {
    }
     
     
-    func presentImage(image: NSImage) {
+    func presentImage(_ image: NSImage) {
         let superlayerBounds = view.layer!.bounds
             
         let center = CGPoint(x: superlayerBounds.midX, y: superlayerBounds.midY)
@@ -141,7 +141,7 @@ class ViewController: NSViewController {
             CGPoint(x: CGFloat(arc4random_uniform(UInt32(superlayerBounds.maxX))),
                     y: CGFloat(arc4random_uniform(UInt32(superlayerBounds.maxY))))
             
-        let timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        let timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
             
         let positionAnimation = CABasicAnimation()
         positionAnimation.fromValue = NSValue(point: center)
@@ -168,3 +168,14 @@ class ViewController: NSViewController {
     
 }
 
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
+	return input.rawValue
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
+}

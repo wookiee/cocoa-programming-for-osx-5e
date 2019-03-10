@@ -10,7 +10,7 @@ import Cocoa
 
 class ImageViewController: NSViewController {
     
-    var image: NSImage?
+    @objc var image: NSImage?
     
     
     override var nibName: String? {

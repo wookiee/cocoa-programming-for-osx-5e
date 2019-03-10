@@ -15,12 +15,12 @@ private let activeTextKey = "activeText"
 
 class PreferenceManager {
     
-    private let userDefaults = NSUserDefaults.standardUserDefaults()
+    fileprivate let userDefaults = UserDefaults.standard
     
     
     func registerDefaultPreferences() {
-        let defaults = [ activeVoiceKey : NSSpeechSynthesizer.defaultVoice() , activeTextKey  : "Able was I ere I saw Elba." ]
-        userDefaults.registerDefaults(defaults)
+        let defaults = [ activeVoiceKey : NSSpeechSynthesizer.defaultVoice , activeTextKey  : "Able was I ere I saw Elba." ] as [String : Any]
+        userDefaults.register(defaults: defaults)
     }
     
     
@@ -31,20 +31,20 @@ class PreferenceManager {
     
     var activeVoice: String? {
         set (newActiveVoice) {
-            userDefaults.setObject(newActiveVoice, forKey: activeVoiceKey)
+            userDefaults.set(newActiveVoice, forKey: activeVoiceKey)
         }
         get {
-            return userDefaults.objectForKey(activeVoiceKey) as? String
+            return userDefaults.object(forKey: activeVoiceKey) as? String
         }
     }
     
     
     var activeText: String? {
         set (newActiveText) {
-            userDefaults.setObject(newActiveText, forKey: activeTextKey)
+            userDefaults.set(newActiveText, forKey: activeTextKey)
         }
         get {
-            return userDefaults.objectForKey(activeTextKey) as? String
+            return userDefaults.object(forKey: activeTextKey) as? String
         }
     }
     

@@ -9,11 +9,11 @@
 import Foundation
 
 class Course: NSObject {
-    let title: String
-    let url: NSURL
-    let nextStartDate: NSDate
+    @objc let title: String
+    @objc let url: URL
+    @objc let nextStartDate: Date
     
-    init(title: String, url: NSURL, nextStartDate: NSDate) {
+    init(title: String, url: URL, nextStartDate: Date) {
         self.title = title
         self.url = url
         self.nextStartDate = nextStartDate

@@ -13,7 +13,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     @IBOutlet weak var window: NSWindow!
 
-    func applicationDidFinishLaunching(aNotification: NSNotification) {
+    func applicationDidFinishLaunching(_ aNotification: Notification) {
         
         //Create the controls for the window:
         
@@ -23,10 +23,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         label.stringValue = "Label"
         
         //Give this NSTextField the styling of a label:
-        label.backgroundColor = NSColor.clearColor()
-        label.editable = false
-        label.selectable = false
-        label.bezeled = false
+        label.backgroundColor = NSColor.clear
+        label.isEditable = false
+        label.isSelectable = false
+        label.isBezeled = false
         
         //Create a text field:
         let textField = NSTextField(frame: NSRect.zero)
@@ -35,7 +35,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         //Make the text field update the label's text
         
         // when the text field's text changes:
-        textField.action = Selector("takeStringValueFrom:")
+        textField.action = #selector(NSCell.takeStringValueFrom(_:))
         textField.target = label
         let superview = window.contentView!
         superview.addSubview(label)
@@ -43,16 +43,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         //Create the constraints between the controls:
         let horizontalConstraints =
-        NSLayoutConstraint.constraintsWithVisualFormat("|-[label]-[textField(>=100)]-|",
-            options:.AlignAllBaseline,
+        NSLayoutConstraint.constraints(withVisualFormat: "|-[label]-[textField(>=100)]-|",
+            options:.alignAllLastBaseline,
             metrics:nil,
             views: ["label" : label, "textField" : textField])
-        NSLayoutConstraint.activateConstraints(horizontalConstraints)
-        let verticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|-[textField]-|",
+        NSLayoutConstraint.activate(horizontalConstraints)
+        let verticalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|-[textField]-|",
             options:[],
             metrics:nil,
             views: ["textField" : textField])
-        NSLayoutConstraint.activateConstraints(verticalConstraints)
+        NSLayoutConstraint.activate(verticalConstraints)
         
 //        window.visualizeConstraints(superview.constraints)
         superview.updateConstraintsForSubtreeIfNeeded()
@@ -61,7 +61,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    func applicationWillTerminate(aNotification: NSNotification) {
+    func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
     }
 

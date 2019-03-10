@@ -21,7 +21,7 @@ class MainSplitViewController: NSSplitViewController, CourseListViewControllerDe
     }
     
     
-    let defaultURL = NSURL(string: "http://www.bignerdranch.com/")!
+    let defaultURL = URL(string: "http://www.bignerdranch.com/")!
     
     
     override func viewDidLoad() {
@@ -32,7 +32,7 @@ class MainSplitViewController: NSSplitViewController, CourseListViewControllerDe
     
     
     // MARK: CourseListViewControllerDelegate
-    func courseListViewController(viewController: CourseListViewController,
+    func courseListViewController(_ viewController: CourseListViewController,
                                   selectedCourse: Course?) {
         if let course = selectedCourse {
             detailViewController.loadURL(course.url)

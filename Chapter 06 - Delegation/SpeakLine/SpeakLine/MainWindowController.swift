@@ -36,20 +36,20 @@ class MainWindowController: NSWindowController, NSSpeechSynthesizerDelegate, NSW
     
     
     // MARK: Action methods
-    @IBAction func speakIt(sender: NSButton) {
+    @IBAction func speakIt(_ sender: NSButton) {
             
         // Get typed-in text as a string
         let string = textField.stringValue
         if string.isEmpty {
-            print("string from \(textField) is empty")
+            print("string from \(String(describing: textField)) is empty")
         } else {
-            speechSynth.startSpeakingString(string)
+            speechSynth.startSpeaking(string)
             isStarted = true
         }
     }
     
     
-    @IBAction func stopIt(sender: NSButton) {
+    @IBAction func stopIt(_ sender: NSButton) {
         speechSynth.stopSpeaking()
         //isStarted = false
     }
@@ -57,24 +57,24 @@ class MainWindowController: NSWindowController, NSSpeechSynthesizerDelegate, NSW
     
     func updateButtons() {
         if isStarted {
-            speakButton.enabled = false
-            stopButton.enabled = true
+            speakButton.isEnabled = false
+            stopButton.isEnabled = true
         } else {
-            stopButton.enabled = false
-            speakButton.enabled = true
+            stopButton.isEnabled = false
+            speakButton.isEnabled = true
         }
     }
     
     
     // MARK: NSSpeechSynthesizerDelegate
-    func speechSynthesizer(sender: NSSpeechSynthesizer, didFinishSpeaking finishedSpeaking: Bool) {
+    func speechSynthesizer(_ sender: NSSpeechSynthesizer, didFinishSpeaking finishedSpeaking: Bool) {
         isStarted = false
         print("finishedSpeaking=\(finishedSpeaking)")
     }
     
     
     // MARK: NSWindowDelegate
-    func windowShouldClose(sender: AnyObject) -> Bool {
+    func windowShouldClose(_ sender: NSWindow) -> Bool {
         if isStarted {
             return !isStarted
         } else {

@@ -21,13 +21,13 @@ class Document: NSDocument, NSTableViewDataSource {
     }
 
     
-    override func windowControllerDidLoadNib(aController: NSWindowController) {
+    override func windowControllerDidLoadNib(_ aController: NSWindowController) {
         super.windowControllerDidLoadNib(aController)
         // Add any code here that needs to be executed once the windowController has loaded the document's window.
     }
 
     
-    override class func autosavesInPlace() -> Bool {
+    override class var autosavesInPlace: Bool {
         return true
     }
 
@@ -38,17 +38,17 @@ class Document: NSDocument, NSTableViewDataSource {
         return "Document"
     }
     
-    override func readFromURL(url: NSURL, ofType typeName: String) throws {
+    override func read(from url: URL, ofType typeName: String) throws {
         // Which file are we getting the zipinfo for?
-        let filename = url.path!
+        let filename = url.path
         
         // Prepare a task object
-        let task = NSTask()
+        let task = Process()
         task.launchPath = "/usr/bin/zipinfo"
         task.arguments = ["-1", filename]
         
         // Create the pipe to read from
-        let outPipe = NSPipe()
+        let outPipe = Pipe()
         task.standardOutput = outPipe
         
         // Start the process
@@ -74,12 +74,11 @@ class Document: NSDocument, NSTableViewDataSource {
         }
         
         // Convert to a string
-        let string = String(data: data, encoding: NSUTF8StringEncoding)!
+        let string = String(data: data, encoding: String.Encoding.utf8)!
         
         // Break the string into lines
-        filenames = string.componentsSeparatedByString("\n")
-        print("filenames = \(filenames)")
-        
+        filenames = string.components(separatedBy: "\n")
+        Swift.print("filenames = \(filenames)")
         // In case of revert
         tableView?.reloadData()
     }
@@ -88,13 +87,13 @@ class Document: NSDocument, NSTableViewDataSource {
     
     
     // MARK: - NSTableViewDataSource
-    func numberOfRowsInTableView(tableView: NSTableView) -> Int {
+    func numberOfRows(in tableView: NSTableView) -> Int {
         return filenames.count
     }
     
     
-    func tableView(tableView: NSTableView, objectValueForTableColumn tableColumn: NSTableColumn?, row: Int) -> AnyObject? {
-        return filenames[row]
+    func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
+        return "\(filenames[row])"
     }
 
 

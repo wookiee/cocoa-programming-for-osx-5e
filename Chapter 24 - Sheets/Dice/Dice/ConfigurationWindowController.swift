@@ -25,8 +25,8 @@ class ConfigurationWindowController: NSWindowController {
         }
     }
     
-    private dynamic var color: NSColor = NSColor.whiteColor()
-    private dynamic var rolls: Int = 10
+    @objc fileprivate dynamic var color: NSColor = NSColor.white
+    @objc fileprivate dynamic var rolls: Int = 10
     
     override var windowNibName: String {
         get {
@@ -34,15 +34,15 @@ class ConfigurationWindowController: NSWindowController {
         }
     }
     
-    @IBAction func okayButtonClicked(button: NSButton) {
-        dismissWithModalResponse(NSModalResponseOK)
+    @IBAction func okayButtonClicked(_ button: NSButton) {
+        dismissWithModalResponse(NSApplication.ModalResponse.OK)
     }
     
-    @IBAction func cancelButtonClicked(button: NSButton) {
-        dismissWithModalResponse(NSModalResponseCancel)
+    @IBAction func cancelButtonClicked(_ button: NSButton) {
+        dismissWithModalResponse(NSApplication.ModalResponse.cancel)
     }
     
-    func dismissWithModalResponse(response: NSModalResponse) {
+    func dismissWithModalResponse(_ response: NSApplication.ModalResponse) {
         window!.sheetParent!.endSheet(window!, returnCode: response)
     }
     

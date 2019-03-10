@@ -24,7 +24,7 @@ class MainWindowController: NSWindowController {
 
     var configurationWindowController: ConfigurationWindowController?
     
-    @IBAction func showDieConfiguration(sender: AnyObject?) {
+    @IBAction func showDieConfiguration(_ sender: AnyObject?) {
         if let window = window, let dieView = window.firstResponder as? DieView {
             let windowController = ConfigurationWindowController()
             windowController.configuration = DieConfiguration(color: dieView.color,
@@ -32,7 +32,7 @@ class MainWindowController: NSWindowController {
             
             window.beginSheet(windowController.window!, completionHandler: { response in
                 
-                if response == NSModalResponseOK {
+                if response == NSApplication.ModalResponse.OK {
                     let configuration = self.configurationWindowController!.configuration
                     
                     dieView.color = configuration.color

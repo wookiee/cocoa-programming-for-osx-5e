@@ -14,7 +14,7 @@ class MainWindowController: NSWindowController {
     @IBOutlet var arrayController: NSArrayController!
     
     let fetcher = ScheduleFetcher()
-    dynamic var courses: [Course] = []
+    @objc dynamic var courses: [Course] = []
     
     
     override var windowNibName: String! {
@@ -26,13 +26,13 @@ class MainWindowController: NSWindowController {
         super.windowDidLoad()
         
         tableView.target = self
-        tableView.doubleAction = Selector("openClass:")
+        tableView.doubleAction = #selector(MainWindowController.openClass(_:))
         
         fetcher.fetchCoursesUsingCompletionHandler { (result) in switch result {
-            case .Success(let courses):
+            case .success(let courses):
                 print("Got courses: \(courses)")
                 self.courses = courses
-            case .Failure(let error):
+            case .failure(let error):
                 print("Got error: \(error)")
                 NSAlert(error: error).runModal()
                 self.courses = []
@@ -41,9 +41,9 @@ class MainWindowController: NSWindowController {
     }
     
     
-    func openClass(sender: AnyObject!) {
+    @objc func openClass(_ sender: AnyObject!) {
         if let course = arrayController.selectedObjects.first as? Course {
-            NSWorkspace.sharedWorkspace().openURL(course.url)
+            NSWorkspace.shared.open(course.url as URL)
         }
     }
     

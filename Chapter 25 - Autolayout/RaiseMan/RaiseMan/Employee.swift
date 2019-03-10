@@ -9,20 +9,20 @@
 import Foundation
 
 class Employee: NSObject, NSCoding {
-    var name: String? = "New Employee"
-    var raise: Float = 0.05
+    @objc var name: String? = "New Employee"
+    @objc var raise: Float = 0.05
     
     // MARK: - NSCoding
-    func encodeWithCoder(aCoder: NSCoder) {
+    func encode(with aCoder: NSCoder) {
         if let name = name {
-            aCoder.encodeObject(name, forKey: "name")
+            aCoder.encode(name, forKey: "name")
         }
-        aCoder.encodeFloat(raise, forKey: "raise")
+        aCoder.encode(raise, forKey: "raise")
     }
     
     required init?(coder aDecoder: NSCoder) {
-        name = aDecoder.decodeObjectForKey("name") as! String?
-        raise = aDecoder.decodeFloatForKey("raise")
+        name = aDecoder.decodeObject(forKey: "name") as! String?
+        raise = aDecoder.decodeFloat(forKey: "raise")
         super.init()
     }
     
@@ -30,15 +30,15 @@ class Employee: NSObject, NSCoding {
         super.init()
     }
     
-    func validateRaise(raiseNumberPointer: AutoreleasingUnsafeMutablePointer<NSNumber?>,
+    func validateRaise(_ raiseNumberPointer: AutoreleasingUnsafeMutablePointer<NSNumber?>,
                            error outError: NSErrorPointer) -> Bool {
-            let raiseNumber = raiseNumberPointer.memory
+            let raiseNumber = raiseNumberPointer.pointee
             if raiseNumber == nil {
                 let domain = "UserInputValidationErrorDomain"
                 let code = 0
                 let userInfo =
                     [NSLocalizedDescriptionKey : "An employee's raise must be a number."]
-                outError.memory = NSError(domain: domain,
+                outError?.pointee = NSError(domain: domain,
                                             code: code,
                                         userInfo: userInfo)
                 return false

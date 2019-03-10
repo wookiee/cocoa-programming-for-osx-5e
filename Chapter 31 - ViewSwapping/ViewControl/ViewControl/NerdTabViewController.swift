@@ -21,17 +21,17 @@ class NerdTabViewController : NSViewController {
     var buttons: [NSButton] = []
     
     
-    func selectTabAtIndex(index: Int) {
-        assert(index >= 0 && index < childViewControllers.count, "index out of range")
-        for (i, button) in buttons.enumerate() {
-            button.state = (index == i) ? NSOnState : NSOffState
+    func selectTabAtIndex(_ index: Int) {
+        assert(index >= 0 && index < children.count, "index out of range")
+        for (i, button) in buttons.enumerated() {
+            button.state = (index == i) ? NSControl.StateValue.on : NSControl.StateValue.off
         }
-        let viewController = childViewControllers[index]
+        let viewController = children[index]
         box.contentView = viewController.view
     }
     
     
-    func selectTab(sender: NSButton) {
+    @objc func selectTab(_ sender: NSButton) {
         let index = sender.tag
         selectTabAtIndex(index)
     }
@@ -48,15 +48,15 @@ class NerdTabViewController : NSViewController {
         let buttonWidth: CGFloat = 28
         let buttonHeight: CGFloat = 28
         
-        let viewControllers = childViewControllers
-        buttons = viewControllers.enumerate().map {
+        let viewControllers = children
+        buttons = viewControllers.enumerated().map {
             (index, viewController) -> NSButton in
             let button = NSButton()
-            button.setButtonType(.ToggleButton)
+            button.setButtonType(.toggle)
             button.translatesAutoresizingMaskIntoConstraints = false
-            button.bordered = false
+            button.isBordered = false
             button.target = self
-            button.action = Selector("selectTab:")
+            button.action = #selector(NerdTabViewController.selectTab(_:))
             button.tag = index
             if let viewController = viewController as? ImageRepresentable {
                 button.image = viewController.image
@@ -66,17 +66,17 @@ class NerdTabViewController : NSViewController {
             }
             button.addConstraints([
                 NSLayoutConstraint(item: button,
-                              attribute: .Width,
-                              relatedBy: .Equal,
+                              attribute: .width,
+                              relatedBy: .equal,
                                  toItem: nil,
-                              attribute: .NotAnAttribute,
+                              attribute: .notAnAttribute,
                              multiplier: 1.0,
                                constant: buttonWidth),
                 NSLayoutConstraint(item: button,
-                              attribute: .Height,
-                              relatedBy: .Equal,
+                              attribute: .height,
+                              relatedBy: .equal,
                                  toItem: nil,
-                              attribute: .NotAnAttribute,
+                              attribute: .notAnAttribute,
                              multiplier: 1.0,
                                constant: buttonHeight)
                 ])
@@ -85,18 +85,18 @@ class NerdTabViewController : NSViewController {
         
             let stackView = NSStackView()
             stackView.translatesAutoresizingMaskIntoConstraints = false
-            stackView.orientation = .Horizontal
+            stackView.orientation = .horizontal
             stackView.spacing = 4
             for button in buttons {
-                stackView.addView(button, inGravity: .Center)
+                stackView.addView(button, in: .center)
             }
             
             box.translatesAutoresizingMaskIntoConstraints = false
-            box.borderType = .NoBorder
-            box.boxType = .Custom
+            box.borderType = .noBorder
+            box.boxType = .custom
             
             let separator = NSBox()
-            separator.boxType = .Separator
+            separator.boxType = .separator
             separator.translatesAutoresizingMaskIntoConstraints = false
             
             view.subviews = [stackView, separator, box]
@@ -104,38 +104,38 @@ class NerdTabViewController : NSViewController {
             let views = ["stack": stackView, "separator": separator, "box": box]
             let metrics = ["buttonHeight": buttonHeight]
             
-            func addVisualFormatConstraints(visualFormat:String) {
+            func addVisualFormatConstraints(_ visualFormat:String) {
                 let constraints =
-                NSLayoutConstraint.constraintsWithVisualFormat(visualFormat,
+                NSLayoutConstraint.constraints(withVisualFormat: visualFormat,
                                                       options: [],
-                                                      metrics: metrics,
+                                                      metrics: metrics as [String : NSNumber],
                                                         views: views)
-                NSLayoutConstraint.activateConstraints(constraints)
+                NSLayoutConstraint.activate(constraints)
             }
             addVisualFormatConstraints("H:|[stack]|")
             addVisualFormatConstraints("H:|[separator]|")
             addVisualFormatConstraints("H:|[box(>=100)]|")
             addVisualFormatConstraints("V:|[stack(buttonHeight)][separator(==1)][box(>=100)]|")
             
-            if childViewControllers.count > 0 {
+            if children.count > 0 {
                 selectTabAtIndex(0)
             }
         
     }
     
     
-    override func insertChildViewController(childViewController: NSViewController,
-                                                  atIndex index: Int) {
-        super.insertChildViewController(childViewController, atIndex: index)
-        if viewLoaded {
+    override func insertChild(_ childViewController: NSViewController,
+                                                  at index: Int) {
+        super.insertChild(childViewController, at: index)
+        if isViewLoaded {
         reset()
         }
     }
     
     
-    override func removeChildViewControllerAtIndex(index: Int) {
-        super.removeChildViewControllerAtIndex(index)
-        if viewLoaded {
+    override func removeChild(at index: Int) {
+        super.removeChild(at: index)
+        if isViewLoaded {
         reset()
         }
     }
