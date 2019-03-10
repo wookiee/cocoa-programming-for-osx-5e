@@ -9,7 +9,7 @@
 import Cocoa
 
 private let font: NSFont = NSFont.userFixedPitchFont(ofSize: 12.0)!
-private let textAttributes: [String: AnyObject] = [NSFontAttributeName : font]
+private let textAttributes: [String: AnyObject] = [convertFromNSAttributedStringKey(NSAttributedString.Key.font) : font]
 private let lineHeight: CGFloat = font.capHeight * 2.0
 
 class EmployeesPrintingView: NSView {
@@ -34,7 +34,7 @@ class EmployeesPrintingView: NSView {
     // MARK: - Pagination
     
     override func knowsPageRange(_ range: NSRangePointer) -> Bool {
-        let printOperation = NSPrintOperation.current()!
+        let printOperation = NSPrintOperation.current!
         let printInfo: NSPrintInfo = printOperation.printInfo
         
         // Where can I draw?
@@ -102,12 +102,12 @@ class EmployeesPrintingView: NSView {
             nameRect.origin.y = pageRect.minY + CGFloat(indexOnPage) * lineHeight
             let employeeName = (employee.name ?? "")
             let indexAndName = "\(indexInEmployees) \(employeeName)"
-            indexAndName.draw(in: nameRect, withAttributes: textAttributes)
+            indexAndName.draw(in: nameRect, withAttributes: convertToOptionalNSAttributedStringKeyDictionary(textAttributes))
             // Draw raise
             raiseRect.origin.y = nameRect.minY
             let raise = String(format: "%4.1f%%", employee.raise * 100)
             let raiseString = raise
-            raiseString.draw(in: raiseRect, withAttributes: textAttributes)
+            raiseString.draw(in: raiseRect, withAttributes: convertToOptionalNSAttributedStringKeyDictionary(textAttributes))
         }
     }
 }
@@ -128,3 +128,14 @@ class EmployeesPrintingView: NSView {
 
 
 
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
+	return input.rawValue
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
+}

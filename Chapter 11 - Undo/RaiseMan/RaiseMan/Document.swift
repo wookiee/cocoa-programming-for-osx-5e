@@ -13,7 +13,7 @@ private var KVOContext: Int = 0
 class Document: NSDocument, NSWindowDelegate {
     @IBOutlet weak var tableView: NSTableView!
     @IBOutlet weak var arrayController: NSArrayController!
-    var employees: [Employee] = [] {
+    @objc var employees: [Employee] = [] {
         willSet {
             for employee in employees {
                 stopObservingEmployee(employee)
@@ -33,7 +33,7 @@ class Document: NSDocument, NSWindowDelegate {
         
         let endedEditing = window.makeFirstResponder(window)
         if !endedEditing {
-            print("Unable to end editing")
+            Swift.print("Unable to end editing")
             return
         }
         
@@ -63,14 +63,14 @@ class Document: NSDocument, NSWindowDelegate {
         let row = sortedEmployees.index(of: employee)!
         
         // Begin the edit in the first column
-        print("starting edit of \(employee) in row \(row)")
+        Swift.print("starting edit of \(employee) in row \(row)")
         tableView.editColumn(0, row: row, with: nil, select: true)
     }
     
     // MARK: - Accessors
     
-    func insertObject(_ employee: Employee, inEmployeesAtIndex index: Int) {
-        print("adding \(employee) to the employees array")
+    @objc func insertObject(_ employee: Employee, inEmployeesAtIndex index: Int) {
+        Swift.print("adding \(employee) to the employees array")
         
         // Add the inverse of this operation to the undo stack
         let undo: UndoManager = undoManager!
@@ -82,10 +82,10 @@ class Document: NSDocument, NSWindowDelegate {
         employees.append(employee)
     }
     
-    func removeObjectFromEmployeesAtIndex(_ index: Int) {
+    @objc func removeObjectFromEmployeesAtIndex(_ index: Int) {
         let employee: Employee = employees[index]
         
-        print("removing \(employee) from the employees array")
+        Swift.print("removing \(employee) from the employees array")
         
         // Add the inverse of this operation to the undo stack 
         let undo: UndoManager = undoManager!
@@ -125,7 +125,7 @@ class Document: NSDocument, NSWindowDelegate {
             }
             
             let undo: UndoManager = undoManager!
-            print("oldValue=\(oldValue)")
+            Swift.print("oldValue=\(oldValue)")
             (undo.prepare(withInvocationTarget: object) as AnyObject).setValue(oldValue, forKeyPath: keyPath)
         }
     }
@@ -146,7 +146,7 @@ class Document: NSDocument, NSWindowDelegate {
         // Add any code here that needs to be executed once the windowController has loaded the document's window.
     }
 
-    override class func autosavesInPlace() -> Bool {
+    override class var autosavesInPlace: Bool {
         return true
     }
 

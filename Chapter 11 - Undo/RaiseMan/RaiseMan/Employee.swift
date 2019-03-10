@@ -9,8 +9,8 @@
 import Foundation
 
 class Employee: NSObject {
-    var name: String? = "New Employee"
-    var raise: Float = 0.05
+    @objc var name: String? = "New Employee"
+    @objc var raise: Float = 0.05
     
     func validateRaise(_ raiseNumberPointer: AutoreleasingUnsafeMutablePointer<NSNumber?>) throws {
             let raiseNumber = raiseNumberPointer.pointee

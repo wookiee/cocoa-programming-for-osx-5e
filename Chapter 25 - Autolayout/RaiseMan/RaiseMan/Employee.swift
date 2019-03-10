@@ -9,8 +9,8 @@
 import Foundation
 
 class Employee: NSObject, NSCoding {
-    var name: String? = "New Employee"
-    var raise: Float = 0.05
+    @objc var name: String? = "New Employee"
+    @objc var raise: Float = 0.05
     
     // MARK: - NSCoding
     func encode(with aCoder: NSCoder) {
