@@ -133,16 +133,16 @@ class DieView: NSView, NSDraggingSource {
 				NSBezierPath(ovalIn: dotRect).fill()
 			}
 			
-			if (1...6).index(of: intValue) != nil {
+			if (1...6).firstIndex(of: intValue) != nil {
 				// Draw Dots
-				if [1, 3, 5].index(of: intValue) != nil {
+				if [1, 3, 5].firstIndex(of: intValue) != nil {
 					drawDot(0.5, 0.5) // center dot
 				}
-				if (2...6).index(of: intValue) != nil {
+				if (2...6).firstIndex(of: intValue) != nil {
 					drawDot(0, 1) // upper left
 					drawDot(1, 0) // lower right
 				}
-				if (4...6).index(of: intValue) != nil {
+				if (4...6).firstIndex(of: intValue) != nil {
 					drawDot(1, 1) // upper right
 					drawDot(0, 0) // lower left
 				}
@@ -347,7 +347,7 @@ class DieView: NSView, NSDraggingSource {
 		writeToPasteboard(NSPasteboard.general)
 	}
 	@IBAction func paste(_ sender: AnyObject?) {
-		readFromPasteboard(NSPasteboard.general)
+		_ = readFromPasteboard(NSPasteboard.general)
 	}
 
 }

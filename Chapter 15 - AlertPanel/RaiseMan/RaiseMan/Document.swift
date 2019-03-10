@@ -61,7 +61,7 @@ class Document: NSDocument, NSWindowDelegate {
         let sortedEmployees = arrayController.arrangedObjects as! [Employee]
         
         // Find the object just added
-        let row = sortedEmployees.index(of: employee)!
+        let row = sortedEmployees.firstIndex(of: employee)!
         
         // Begin the edit in the first column
         Swift.print("starting edit of \(employee) in row \(row)")
@@ -146,7 +146,7 @@ class Document: NSDocument, NSWindowDelegate {
             }
             
             let undo: UndoManager = undoManager!
-            Swift.print("oldValue=\(oldValue)")
+            Swift.print("oldValue=\(String(describing: oldValue))")
             (undo.prepare(withInvocationTarget: object) as AnyObject).setValue(oldValue, forKeyPath: keyPath)
         }
     }

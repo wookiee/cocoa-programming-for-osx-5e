@@ -41,7 +41,7 @@ class MainWindowController: NSWindowController, NSSpeechSynthesizerDelegate, NSW
         // Get typed-in text as a string
         let string = textField.stringValue
         if string.isEmpty {
-            print("string from \(textField) is empty")
+            print("string from \(String(describing: textField)) is empty")
         } else {
             speechSynth.startSpeaking(string)
             isStarted = true
